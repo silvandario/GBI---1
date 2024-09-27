@@ -1,14 +1,9 @@
 ------------------------------------------------------------------------
-Dies ist die README-Datei des Projekts. Hier sollten Sie Ihr Projekt
-beschreiben.
-Erzählen Sie dem Leser (jemand, der nichts über dieses Projekt weiss),
-alles, was er/sie wissen muss. Üblicherweise sollte der Kommentar 
-zumindest die folgenden Angaben umfassen:
-------------------------------------------------------------------------
+University of St. Gallen (HSG) Projekt Grundlagen Business Innovation
 
-PROJEKTBEZEICHNUNG:
-PROJEKTZWECK:
-VERSION oder DATUM:
+PROJEKTBEZEICHNUNG: Smart Manufactory
+PROJEKTZWECK: Collaboration Team 1
+VERSION oder DATUM: 27.09.2024
 WIE IST DAS PROJEKT ZU STARTEN:
-AUTOR(EN):
-BENUTZERHINWEISE:
+AUTOR(EN): Silvan Dario
+
