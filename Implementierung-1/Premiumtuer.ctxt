@@ -1,0 +1,22 @@
+#BlueJ class context
+comment0.target=Premiumtuer
+comment0.text=\n\ Premiumtuer\ ist\ eine\ Subklasse\ von\ Produkt.\ Premiumt\u00FCr\ erweitert\ also\ Produkt.\n\ \n\ @author\ SL\n\ @version\ 1.0\n
+comment1.params=
+comment1.target=int\ getHolzeinheiten()
+comment1.text=\n\ Gibt\ die\ Anzahl\ der\ Holzeinheiten\ zur\u00FCck.\n\ \n\ @return\ Anzahl\ der\ Holzeinheiten\ der\ Premiumtuer\n
+comment2.params=
+comment2.target=int\ getSchrauben()
+comment2.text=\n\ Gibt\ die\ Anzahl\ der\ Schrauben\ zur\u00FCck.\n\ \n\ @return\ Anzahl\ der\ Schrauben\ der\ Premiumtuer\n
+comment3.params=
+comment3.target=int\ getGlaseinheiten()
+comment3.text=\n\ Gibt\ die\ Anzahl\ der\ Glaseinheiten\ zur\u00FCck.\n\ \n\ @return\ Anzahl\ der\ Glaseinheiten\ der\ Premiumtuer\n
+comment4.params=
+comment4.target=int\ getFarbeinheiten()
+comment4.text=\n\ Gibt\ die\ Farbeinheiten\ zur\u00FCck.\n\ \n\ @return\ Farbeinheiten\ der\ Premiumtuer\n
+comment5.params=
+comment5.target=int\ getKartoneinheiten()
+comment5.text=\n\ Gibt\ die\ Kartoneinheiten\ zur\u00FCck.\n\ \n\ @return\ Kartoneinheiten\ der\ Premiumtuer\n
+comment6.params=
+comment6.target=int\ getProduktionsZeit()
+comment6.text=\n\ Gibt\ die\ Produktionszeit\ zur\u00FCck.\n\ \n\ @return\ Produktionszeit\ der\ Premiumtuer\n
+numComments=7

@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.target=Produkt
+comment0.text=\n\ Abstrakte\ Klasse\ Produkt\ -\ wird\ von\ Standardtuer\ und\ Premiumtuer\ erweitert.\n\ Jedes\ Produkt\ hat\ einen\ Zustand,\ der\ den\ Status\ des\ Produkts\ beschreibt.\n
+comment1.params=neuerZustand
+comment1.target=void\ zustandAendern(int)
+comment1.text=\n\ Setzt\ den\ Zustand\ des\ Produkts.\n\ \n\ @param\ neuerZustand\ der\ neue\ Zustand\ des\ Produkts\n
+comment2.params=
+comment2.target=int\ aktuelleZustand()
+comment2.text=\n\ Gibt\ den\ aktuellen\ Zustand\ des\ Produkts\ zur\u00FCck.\n\ \n\ @return\ aktueller\ Zustand\ des\ Produkts\n
+numComments=3

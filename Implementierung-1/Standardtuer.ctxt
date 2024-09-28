@@ -1,0 +1,19 @@
+#BlueJ class context
+comment0.target=Standardtuer
+comment0.text=\n\ Standardtuer\ ist\ eine\ Subklasse\ von\ Produkt.\ Standardtuer\ erweitert\ demnach\ Produkt.\n\ \n\ @author\ (Ihr\ Name)\ \n\ @version\ (eine\ Versionsnummer\ oder\ ein\ Datum)\n
+comment1.params=
+comment1.target=int\ getHolzeinheiten()
+comment1.text=\n\ Gibt\ die\ Anzahl\ der\ Holzeinheiten\ zur\u00FCck.\n\ \n\ @return\ Anzahl\ der\ Holzeinheiten\ der\ Standardtuer\n
+comment2.params=
+comment2.target=int\ getSchrauben()
+comment2.text=\n\ Gibt\ die\ Anzahl\ der\ Schrauben\ zur\u00FCck.\n\ \n\ @return\ Anzahl\ der\ Schrauben\ der\ Standardtuer\n
+comment3.params=
+comment3.target=int\ getFarbeinheiten()
+comment3.text=\n\ Gibt\ die\ Farbeinheiten\ zur\u00FCck.\n\ \n\ @return\ Farbeinheiten\ der\ Standardtuer\n
+comment4.params=
+comment4.target=int\ getKartoneinheiten()
+comment4.text=\n\ Gibt\ die\ Kartoneinheiten\ zur\u00FCck.\n\ \n\ @return\ Kartoneinheiten\ der\ Standardtuer\n
+comment5.params=
+comment5.target=int\ getProduktionsZeit()
+comment5.text=\n\ Gibt\ die\ Produktionszeit\ zur\u00FCck.\n\ \n\ @return\ Produktionszeit\ der\ Standardtuer\n
+numComments=6
