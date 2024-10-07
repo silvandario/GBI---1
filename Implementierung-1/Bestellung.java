@@ -1,6 +1,6 @@
 
 /**
- * Beschreiben Sie hier die Klasse Bestellung.
+ * 
  * 
  * @author (Ihr Name) 
  * @version (eine Versionsnummer oder ein Datum)
