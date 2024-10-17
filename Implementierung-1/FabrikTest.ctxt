@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=FabrikTest
-comment0.text=\n\ Die\ Test-Klasse\ FabrikTest.\n\n\ @author\ \ (Ihr\ Name)\n\ @version\ (eine\ Versionsnummer\ oder\ ein\ Datum)\n
+comment0.text=\n\ Die\ Test-Klasse\ FabrikTest.\n\n\ @author\ \ Silvan\ Ladner\n\ @version\ 1\n
 comment1.params=
 comment1.target=FabrikTest()
 comment1.text=\n\ Konstruktor\ fuer\ die\ Test-Klasse\ FabrikTest\n
@@ -10,4 +10,8 @@ comment2.text=\n\ \ Setzt\ das\ Testger\u00FCst\ fuer\ den\ Test.\n\n\ Wird\ vor
 comment3.params=
 comment3.target=void\ tearDown()
 comment3.text=\n\ Gibt\ das\ Testger\u00FCst\ wieder\ frei.\n\n\ Wird\ nach\ jeder\ Testfall-Methode\ aufgerufen.\n
-numComments=4
+comment4.params=
+comment4.target=void\ testNichtNegativeAnzahlProdukteBestellen()
+comment5.params=
+comment5.target=void\ testLeereBestellung()
+numComments=6
