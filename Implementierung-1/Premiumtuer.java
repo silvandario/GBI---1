@@ -5,13 +5,22 @@
  * @version 2.0
  */
 public class Premiumtuer extends Produkt {
-    // Instanzvariablen -> Konstanten für die Produkteigenschaften
+    // Instanzvariablen -> Konstanten für die Porduktion einer Einheit
+    // Diese sind fix (final)
     private static final int HOLZEINHEITEN = 4;
     private static final int SCHRAUBEN = 5;
     private static final int GLASSEINHEITEN = 5;
     private static final int FARBEINHEITEN = 1;
     private static final int KARTONEINHEITEN = 5;
     private static final int PRODUKTIONSZEIT = 30;
+    
+    
+    /**
+     * Konstruktor ruft Superklasse-Konstruktor auf
+     */
+    public Premiumtuer() {
+        super();
+    }
 
     /**
      * Gibt die Anzahl der Holzeinheiten zurück.

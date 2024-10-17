@@ -6,12 +6,21 @@
  * @version 2.0
  */
 public class Standardtuer extends Produkt {
-    // Instanzvariablen - Konstanten für die Produkteigenschaften
+    // Instanzvariablen -> Konstanten für die Porduktion einer Einheit
+    // Diese sind fix (final)
     private static final int HOLZEINHEITEN = 2;
     private static final int SCHRAUBEN = 10;
     private static final int FARBEINHEITEN = 2;
     private static final int KARTONEINHEITEN = 1;
     private static final int PRODUKTIONSZEIT = 10;
+    
+    /**
+     * Konstruktor ruft Superklasse-Konstruktor auf
+     */
+    
+    public Standardtuer() {
+        super();
+    }
 
     /**
      * Gibt die Anzahl der Holzeinheiten zurück.

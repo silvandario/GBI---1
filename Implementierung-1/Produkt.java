@@ -1,17 +1,30 @@
 
 /**
- * Abstrakte Klasse Produkt - wird von Standardtuer und Premiumtuer erweitert.
+ * Die Klasse Produkt wird von Standardtuer und Premiumtuer erweitert. Produkt ist also Superklasse von Standard- und Premiumtür.
  * Jedes Produkt hat einen Zustand, der den Status des Produkts beschreibt.
  * 
  * @author Silvan Ladner
- * @version 2.0
+ * @version 2.1
  */
-public abstract class Produkt {
-    // Zustand des Produkts
+public class Produkt {
+    /**Die variabel zustand korrespondiert mit dem Zustand (als ganzzahlige numerische Kodierung) des betsellten Produktes
+     * Zustände (zur Zeit noch arbiträr, da auch von späterer Implementation abhängig):
+     * 1: betsellt
+     * 2: in Produktion
+     * 3: fertig gestellt & im Lager
+     * 4: verkauft & abtransportiert
+     */
     private int zustand;
+    
+    /**
+     * no-args-Konstruktor
+     */
+    public Produkt() {
+        zustand = 1; // 1, da neu
+    }
 
     /**
-     * Setzt den Zustand des Produkts.
+     * Ändert den Zustand des Produkts.
      * 
      * @param neuerZustand der neue Zustand des Produkts
      */

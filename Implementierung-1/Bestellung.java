@@ -7,9 +7,9 @@ import java.util.ArrayList;
  * @version 2.0
  */
 public class Bestellung {
-    // Instanzvariablen
-    private ArrayList<Produkt> bestellteProdukte = new ArrayList<>();
-    private boolean bestellBestaetigung = false;
+    
+    private ArrayList<Produkt> bestellteProdukte = new ArrayList<>(); // Liste, die (anders als Array) wachsen (und schrumpfen) kann - enthält alle bestellten Produkte.
+    private boolean bestellBestaetigung = false; // True (false) ebedeutet, dass Btestellung bestätigt wurde (nicht)
     private int bestellungsNr;
     private int beschaffungsZeit;
     private int anzahlStandardTueren;
@@ -27,7 +27,7 @@ public class Bestellung {
         this.anzahlPremiumTueren = anzahlPremiumTueren;
         this.bestellungsNr = bestellungsNr;
 
-        // Initialisierung der bestellten Produkte 
+    
         for (int i = 0; i < anzahlStandardTueren; i++) {
             bestellteProdukte.add(new Standardtuer());
         }
@@ -35,7 +35,25 @@ public class Bestellung {
             bestellteProdukte.add(new Premiumtuer());
         }
     }
-
+    
+    /**
+     * standartTuereHinzufuegen fügt eine Standardtuer der bestellteProdukte Liste hinzu nachdem diese Standardtuer erstellt wurde
+     * Hilft fpür das einzelne Hinzufügen
+     */
+    public void standartTuereHinzufuegen() {
+       Standardtuer standardtuer = new Standardtuer();
+       bestellteProdukte.add(standardtuer);
+    }
+    
+    /**
+     * standartTuereHinzufuegen fügt eine Standardtuer der bestellteProdukte Liste hinzu nachdem diese Standardtuer erstellt wurde
+     *  * Hilft fpür das einzelne Hinzufügen
+     */
+    public void premiumTuereHinzufuegen() {
+       Premiumtuer premiumtuer = new Premiumtuer();
+       bestellteProdukte.add(premiumtuer);
+    }
+    
     /**
      * Bestätigt die Bestellung.
      */
@@ -55,7 +73,7 @@ public class Bestellung {
     /**
      * Setzt die Beschaffungszeit der Bestellung.
      * 
-     * @param zeit Beschaffungszeit in Tagen
+     * @param zeit Beschaffungszeit (in Tagen)
      */
     public void setzeBeschaffungsZeit(int zeit) {
         this.beschaffungsZeit = zeit;

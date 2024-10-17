@@ -1,10 +1,13 @@
 #BlueJ class context
 comment0.target=Produkt
-comment0.text=\n\ Abstrakte\ Klasse\ Produkt\ -\ wird\ von\ Standardtuer\ und\ Premiumtuer\ erweitert.\n\ Jedes\ Produkt\ hat\ einen\ Zustand,\ der\ den\ Status\ des\ Produkts\ beschreibt.\n
-comment1.params=neuerZustand
-comment1.target=void\ zustandAendern(int)
-comment1.text=\n\ Setzt\ den\ Zustand\ des\ Produkts.\n\ \n\ @param\ neuerZustand\ der\ neue\ Zustand\ des\ Produkts\n
-comment2.params=
-comment2.target=int\ aktuelleZustand()
-comment2.text=\n\ Gibt\ den\ aktuellen\ Zustand\ des\ Produkts\ zur\u00FCck.\n\ \n\ @return\ aktueller\ Zustand\ des\ Produkts\n
-numComments=3
+comment0.text=\n\ Die\ Klasse\ Produkt\ wird\ von\ Standardtuer\ und\ Premiumtuer\ erweitert.\ Produkt\ ist\ also\ Superklasse\ von\ Standard-\ und\ Premiumt\u00FCr.\n\ Jedes\ Produkt\ hat\ einen\ Zustand,\ der\ den\ Status\ des\ Produkts\ beschreibt.\n\ \n\ @author\ Silvan\ Ladner\n\ @version\ 2.1\n
+comment1.params=
+comment1.target=Produkt()
+comment1.text=\n\ no-args-Konstruktor\n
+comment2.params=neuerZustand
+comment2.target=void\ zustandAendern(int)
+comment2.text=\n\ \u00C4ndert\ den\ Zustand\ des\ Produkts.\n\ \n\ @param\ neuerZustand\ der\ neue\ Zustand\ des\ Produkts\n
+comment3.params=
+comment3.target=int\ getAktuellerZustand()
+comment3.text=\n\ Gibt\ den\ aktuellen\ Zustand\ des\ Produkts\ zur\u00FCck.\n\ \n\ @return\ aktueller\ Zustand\ des\ Produkts\n
+numComments=4
