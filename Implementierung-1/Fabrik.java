@@ -1,53 +1,33 @@
+import java.util.Scanner;
+import java.util.ArrayList;
+
 /**
  * Die Klasse Fabrik verwaltet Bestellungen von Türen.
  * Eine Fabrik kann Bestellungen entgegennehmen und diese ausgeben.
+ * 
+ * @author Silvan Ladner
+ * @version 1
  */
-import java.util.Scanner;
-import java.util.ArrayList; //Import wird benötigt
-public class Fabrik
-{
-    
+public class Fabrik {
     private ArrayList<Bestellung> bestellungen = new ArrayList<>();
-    private int bestellungsNr;
-    
+    private int bestellungsNr = 1;
+
     /**
      * Hauptprogramm.
      */
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in); //Benutzereingabe anstzatt Werte hardcoden
+        Scanner scanner = new Scanner(System.in);
         Fabrik fabrik = new Fabrik();
 
-        // Benutzer nach der Anzahl der Standardtüren fragen
-        int standardTueren = -1; //mit negativen Wert, um die Schlaufe zu triggeren
-        while (standardTueren < 0) {
-            System.out.println("Geben Sie die Anzahl der Standardtüren ein (0 oder mehr): ");
-            standardTueren = scanner.nextInt();
-            if (standardTueren < 0) {
-                System.out.println("Die Anzahl der Standardtüren muss 0 oder mehr sein. Bitte versuchen Sie es erneut.");
-            }
-        }
-
-        // Benutzer nach der Anzahl der Premiumtüren fragen
-        int premiumTueren = -1;//mit negativen Wert, um die Schlaufe zu triggeren
-        while (premiumTueren < 0) {
-            System.out.println("Geben Sie die Anzahl der Premiumtüren ein (0 oder mehr): ");
-            premiumTueren = scanner.nextInt();
-            if (premiumTueren < 0) {
-                System.out.println("Die Anzahl der Premiumtüren muss 0 oder mehr sein. Bitte versuchen Sie es erneut.");
-            }
-        }
-        
-        //if kein Input Fall, müssen die Türen ggf. noch positiv werden
-        if (standardTueren < 0 || premiumTueren < 0) {
-            standardTueren = Math.abs(standardTueren);
-            premiumTueren = Math.abs(premiumTueren);
-        }
+        // Anzahl der Standardtüren und Premiumtüren erfragen
+        int standardTueren = fabrik.getPositiveEingabe(scanner, "Geben Sie die Anzahl der Standardtüren ein (größer als 0): ");
+        int premiumTueren = fabrik.getPositiveEingabe(scanner, "Geben Sie die Anzahl der Premiumtüren ein (größer als 0): ");
 
         // Bestellung aufgeben
         fabrik.bestellungAufgeben(standardTueren, premiumTueren);
 
         // Alle Bestellungen ausgeben
-        fabrik.bestellungAusgeben();
+        fabrik.bestellungenAusgeben();
 
         // Scanner schließen
         scanner.close();
@@ -60,14 +40,50 @@ public class Fabrik
      * @param premiumTueren Anzahl der Premiumtüren
      */
     public void bestellungAufgeben(int standardTueren, int premiumTueren) {
-        Bestellung neueBestellung = new Bestellung(standardTueren, premiumTueren);
+        Bestellung neueBestellung = new Bestellung(standardTueren, premiumTueren, bestellungsNr);
+        bestellungen.add(neueBestellung);
+        System.out.println("Bestellung mit Bestellungsnummer " + bestellungsNr + " wurde erfolgreich aufgegeben.");
+        bestellungsNr++;
     }
 
-    public void bestellungAusgeben() {
-        for (Bestellung bestellung : bestellungen) { //jedes Element durchlaufen und Ausgeben
-            //System.out.println("BestellungsNr: " + bestellungsNr); // in Zukunft evtl. 
-            System.out.println("Anzahl Standardtueren: " + bestellung.gibAnzahlStandardTueren());
-            System.out.println("Anzahl Premiumtueren: " + bestellung.gibAnzahlPremiumTueren());
+    /**
+     * Gibt alle Bestellungen aus, einschließlich der Details zu den Standard- und Premiumtüren.
+     */
+    public void bestellungenAusgeben() {
+        for (int i = 0; i < bestellungen.size(); i++) {
+            Bestellung bestellung = bestellungen.get(i);
+            System.out.println("Bestellungsnummer: " + bestellung.gibBestellungsNr());
+            System.out.println("Anzahl Standardtüren: " + bestellung.gibAnzahlStandardTueren());
+            System.out.println("Anzahl Premiumtüren: " + bestellung.gibAnzahlPremiumTueren());
+            System.out.println("Bestellte Produkte: ");
+            for (Produkt produkt : bestellung.gibBestellteProdukte()) {
+                System.out.println(" - Produktzustand: " + produkt.getAktuellerZustand());
+            }
+            System.out.println("-------------------------");
         }
+    }
+
+    /**
+     * Fordert den Benutzer auf, eine positive Zahl größer als 0 einzugeben.
+     * 
+     * @param scanner Der Scanner zum Erfassen der Benutzereingabe
+     * @param nachricht Die Nachricht, die dem Benutzer angezeigt wird
+     * @return Eine positive ganze Zahl größer als 0
+     */
+    private int getPositiveEingabe(Scanner scanner, String nachricht) {
+        int eingabe;
+        do {
+            System.out.print(nachricht);
+            while (!scanner.hasNextInt()) {
+                System.out.println("Ungültige Eingabe. Bitte geben Sie eine Zahl größer als 0 ein.");
+                scanner.next(); // Ungültigen Input verwerfen
+                System.out.print(nachricht);
+            }
+            eingabe = scanner.nextInt();
+            if (eingabe <= 0) {
+                System.out.println("Die Anzahl muss größer als 0 sein. Bitte versuchen Sie es erneut.");
+            }
+        } while (eingabe <= 0);
+        return eingabe;
     }
 }

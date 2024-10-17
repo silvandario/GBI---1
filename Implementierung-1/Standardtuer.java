@@ -2,25 +2,24 @@
 /**
  * Standardtuer ist eine Subklasse von Produkt. Standardtuer erweitert demnach Produkt.
  * 
- * @author (Ihr Name) 
- * @version (eine Versionsnummer oder ein Datum)
+ * @author Silvan Ladner
+ * @version 2.0
  */
-public class Standardtuer extends Produkt
-{
-    // Instanzvariablen - ersetzen Sie das folgende Beispiel mit Ihren Variablen
-    private static final int holzeinheiten = 2;
-    private static final int schrauben = 10;
-    private static final int farbeinheiten = 2;
-    private static final int kartoneinheiten = 1;
-    private static final int produktionsZeit = 10;
-    
+public class Standardtuer extends Produkt {
+    // Instanzvariablen - Konstanten für die Produkteigenschaften
+    private static final int HOLZEINHEITEN = 2;
+    private static final int SCHRAUBEN = 10;
+    private static final int FARBEINHEITEN = 2;
+    private static final int KARTONEINHEITEN = 1;
+    private static final int PRODUKTIONSZEIT = 10;
+
     /**
      * Gibt die Anzahl der Holzeinheiten zurück.
      * 
      * @return Anzahl der Holzeinheiten der Standardtuer
      */
     public static int getHolzeinheiten() {
-        return holzeinheiten;
+        return HOLZEINHEITEN;
     }
 
     /**
@@ -29,33 +28,33 @@ public class Standardtuer extends Produkt
      * @return Anzahl der Schrauben der Standardtuer
      */
     public static int getSchrauben() {
-        return schrauben;
+        return SCHRAUBEN;
     }
-    
+
     /**
-     * Gibt die Farbeinheiten zurück.
+     * Gibt die Anzahl der Farbeinheiten zurück.
      * 
-     * @return Farbeinheiten der Standardtuer
+     * @return Anzahl der Farbeinheiten der Standardtuer
      */
     public static int getFarbeinheiten() {
-        return farbeinheiten;
+        return FARBEINHEITEN;
     }
-    
+
     /**
-     * Gibt die Kartoneinheiten zurück.
+     * Gibt die Anzahl der Kartoneinheiten zurück.
      * 
-     * @return Kartoneinheiten der Standardtuer
+     * @return Anzahl der Kartoneinheiten der Standardtuer
      */
     public static int getKartoneinheiten() {
-        return kartoneinheiten;
+        return KARTONEINHEITEN;
     }
-    
+
     /**
      * Gibt die Produktionszeit zurück.
      * 
      * @return Produktionszeit der Standardtuer
      */
-    public static int getProduktionsZeit() {
-        return produktionsZeit;
+    public static int getProduktionszeit() {
+        return PRODUKTIONSZEIT;
     }
 }

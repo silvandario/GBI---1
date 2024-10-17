@@ -1,40 +1,82 @@
+import java.util.ArrayList;
 
 /**
+ * Klasse Bestellung - repräsentiert eine Bestellung von Standard- und Premiumtüren.
  * 
- * 
- * @author (Ihr Name) 
- * @version (eine Versionsnummer oder ein Datum)
+ * @author Silvan Ladner
+ * @version 2.0
  */
-import java.util.ArrayList;
-public class Bestellung
-{
-    // Instanzvariablen - ersetzen Sie das folgende Beispiel mit Ihren Variablen
+public class Bestellung {
+    // Instanzvariablen
     private ArrayList<Produkt> bestellteProdukte = new ArrayList<>();
-    private boolean bestellBestaetigung;
+    private boolean bestellBestaetigung = false;
+    private int bestellungsNr;
     private int beschaffungsZeit;
     private int anzahlStandardTueren;
     private int anzahlPremiumTueren;
-    //private int bestellNr; // evtl. in Zukunft mit Fabrik
-    
+
     /**
      * Konstruktor für Bestellung.
      * 
      * @param anzahlStandardTueren Anzahl der bestellten Standardtüren
      * @param anzahlPremiumTueren Anzahl der bestellten Premiumtüren
+     * @param bestellungsNr Bestellnummer der Bestellung
      */
-    public Bestellung(int anzahlStandardTueren, int anzahlPremiumTueren) {
+    public Bestellung(int anzahlStandardTueren, int anzahlPremiumTueren, int bestellungsNr) {
         this.anzahlStandardTueren = anzahlStandardTueren;
         this.anzahlPremiumTueren = anzahlPremiumTueren;
+        this.bestellungsNr = bestellungsNr;
+
+        // Initialisierung der bestellten Produkte 
+        for (int i = 0; i < anzahlStandardTueren; i++) {
+            bestellteProdukte.add(new Standardtuer());
+        }
+        for (int i = 0; i < anzahlPremiumTueren; i++) {
+            bestellteProdukte.add(new Premiumtuer());
+        }
     }
 
+    /**
+     * Bestätigt die Bestellung.
+     */
+    public void bestellungBestaetigen() {
+        this.bestellBestaetigung = true;
+    }
 
     /**
-     * Fügt ein Produkt der Bestellung hinzu.
+     * Gibt an, ob die Bestellung bestätigt wurde.
      * 
-     * @param produkt Das hinzuzufügende Produkt
+     * @return true, wenn die Bestellung bestätigt wurde, ansonsten false
      */
-    public void addProdukt(Produkt produkt) {
-        bestellteProdukte.add(produkt);
+    public boolean gibBestellBestaetigung() {
+        return bestellBestaetigung;
+    }
+
+    /**
+     * Setzt die Beschaffungszeit der Bestellung.
+     * 
+     * @param zeit Beschaffungszeit in Tagen
+     */
+    public void setzeBeschaffungsZeit(int zeit) {
+        this.beschaffungsZeit = zeit;
+    }
+
+    /**
+     * Gibt die Beschaffungszeit der Bestellung zurück.
+     * 
+     * @return Beschaffungszeit in Tagen
+     */
+    public int gibBeschaffungsZeit() {
+        return beschaffungsZeit;
+    }
+
+    /**
+     * Gibt die Bestellnummer zurück.
+     * 
+     * @return Bestellnummer
+     */
+    public int gibBestellungsNr() {
+        return bestellungsNr;
     }
 
     /**
@@ -55,9 +97,12 @@ public class Bestellung
         return anzahlPremiumTueren;
     }
 
-    // Evtl. in Zukunft
-    //public int gibBestellungsNr() {
-    //    return bestellNr;
-    //}
-
+    /**
+     * Gibt die Liste der bestellten Produkte zurück.
+     * 
+     * @return Liste der bestellten Produkte
+     */
+    public ArrayList<Produkt> gibBestellteProdukte() {
+        return bestellteProdukte;
+    }
 }
