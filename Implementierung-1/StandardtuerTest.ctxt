@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.target=StandardtuerTest
+comment0.text=\n\ Die\ Test-Klasse\ StandardtuerTest.\ Gepr\u00FCft\ wird\ ob\ die\ MEthode\ von\ Superklasse\ PRodukt\n\ richtig\ vererbt\ wird\ und\ ob\ eine\ zuf\u00E4llig\ ausgew\u00E4hlte\ get-Methode\ funktioniert\n\n\ @author\ \ Silvan\ Ladner\n\ @version\ 1\n
+comment1.params=
+comment1.target=StandardtuerTest()
+comment1.text=\n\ Konstruktor\ fuer\ die\ Test-Klasse\ StandardtuerTest\n
+comment2.params=
+comment2.target=void\ setUp()
+comment2.text=\n\ \ Setzt\ das\ Testger\u00FCst\ fuer\ den\ Test.\n\n\ Wird\ vor\ jeder\ Testfall-Methode\ aufgerufen.\n
+comment3.params=
+comment3.target=void\ tearDown()
+comment3.text=\n\ Gibt\ das\ Testger\u00FCst\ wieder\ frei.\n\n\ Wird\ nach\ jeder\ Testfall-Methode\ aufgerufen.\n
+comment4.params=
+comment4.target=void\ testStandardtuerHatSuperklasseMethode()
+comment5.params=
+comment5.target=void\ testGibRichtigeFinalenWertZeit()
+numComments=6

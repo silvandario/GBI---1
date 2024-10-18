@@ -13,6 +13,7 @@ public class Produkt {
      * 2: in Produktion
      * 3: fertig gestellt & im Lager
      * 4: verkauft & abtransportiert
+     * 5: Achtung! Hier ist was Falsch
      */
     private int zustand;
     
@@ -29,7 +30,11 @@ public class Produkt {
      * @param neuerZustand der neue Zustand des Produkts
      */
     public void zustandAendern(int neuerZustand) {
+        if (neuerZustand >= 0 && neuerZustand < 5) {
         this.zustand = neuerZustand;
+    } else {
+        this.zustand = 5;
+    }
     }
 
     /**

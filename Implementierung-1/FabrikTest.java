@@ -54,7 +54,7 @@ public class FabrikTest
         Anzahl Premiumtüren: 400
         Beschaffungszeit: 0
         Bestellbestätigung: false
-        --------------------------------------------
+        -------------------------------------------- 
         Bestellungsnummer: 3
         Anzahl Standardtüren: 0
         Anzahl Premiumtüren: 1

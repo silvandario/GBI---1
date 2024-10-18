@@ -23,11 +23,11 @@ public class Bestellung {
      * @param bestellungsNr Bestellnummer der Bestellung
      */
     public Bestellung(int anzahlStandardTueren, int anzahlPremiumTueren, int bestellungsNr) {
-        this.anzahlStandardTueren = anzahlStandardTueren;
-        this.anzahlPremiumTueren = anzahlPremiumTueren;
+        this.anzahlStandardTueren = Math.abs(anzahlStandardTueren);
+        this.anzahlPremiumTueren = Math.abs(anzahlPremiumTueren);
         this.bestellungsNr = bestellungsNr;
 
-    
+        // Math abs um eine Eingabe wie -5 (woebi das "-" als Auflistungszeichen gemeint ist)in einen positiven Wert umzuwandeln)
         for (int i = 0; i < anzahlStandardTueren; i++) {
             bestellteProdukte.add(new Standardtuer());
         }
@@ -37,7 +37,7 @@ public class Bestellung {
     }
     
     /**
-     * standartTuereHinzufuegen fügt eine Standardtuer der bestellteProdukte Liste hinzu nachdem diese Standardtuer erstellt wurde
+     * standardTuereHinzufuegen fügt eine Standardtuer der bestellteProdukte Liste hinzu nachdem diese Standardtuer erstellt wurde
      * Hilft fpür das einzelne Hinzufügen
      */
     public void standartTuereHinzufuegen() {
@@ -46,7 +46,7 @@ public class Bestellung {
     }
     
     /**
-     * standartTuereHinzufuegen fügt eine Standardtuer der bestellteProdukte Liste hinzu nachdem diese Standardtuer erstellt wurde
+     * premiumTuereHinzufuegen fügt eine Standardtuer der bestellteProdukte Liste hinzu nachdem diese Standardtuer erstellt wurde
      *  * Hilft fpür das einzelne Hinzufügen
      */
     public void premiumTuereHinzufuegen() {
