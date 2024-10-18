@@ -1,17 +1,16 @@
 #BlueJ class context
 comment0.target=FabrikTest
-comment0.text=\n\ Die\ Test-Klasse\ FabrikTest.\n\n\ @author\ \ Silvan\ Ladner\n\ @version\ 1\n
+comment0.text=\n\ Diese\ Testklasse\ pr\u00FCft\ die\ Fabrik.\ Da\ void\ Methoden\ vorhanden\ sind,\ wobei\ oft\ Output\ in\ die\ Konsole\ geprintet\ wird,\ wird\ deiser\ Output\ als\ Referenz\ genommen.\n\ \n\ @author\ Silvan\ Ladner\n\ @version\ 3.2\n
 comment1.params=
-comment1.target=FabrikTest()
-comment1.text=\n\ Konstruktor\ fuer\ die\ Test-Klasse\ FabrikTest\n
+comment1.target=void\ setUp()
 comment2.params=
-comment2.target=void\ setUp()
-comment2.text=\n\ \ Setzt\ das\ Testger\u00FCst\ fuer\ den\ Test.\n\n\ Wird\ vor\ jeder\ Testfall-Methode\ aufgerufen.\n
+comment2.target=void\ tearDown()
 comment3.params=
-comment3.target=void\ tearDown()
-comment3.text=\n\ Gibt\ das\ Testger\u00FCst\ wieder\ frei.\n\n\ Wird\ nach\ jeder\ Testfall-Methode\ aufgerufen.\n
+comment3.target=void\ testErfolgreicheBestellung()
 comment4.params=
-comment4.target=void\ testNichtNegativeAnzahlProdukteBestellen()
+comment4.target=void\ testLeereBestellung()
 comment5.params=
-comment5.target=void\ testLeereBestellung()
-numComments=6
+comment5.target=void\ testNegativeBestellung()
+comment6.params=
+comment6.target=void\ testBestellungsNummernKorrekt()
+numComments=7

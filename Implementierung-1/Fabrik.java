@@ -10,11 +10,11 @@ import java.util.ArrayList;
  */
 public class Fabrik {
     
-    // bestgellte Produkte gehen in diese Array List
+    // bestellte Produkte gehen in diese Array List
     private ArrayList<Bestellung> bestellungen = new ArrayList<>();
     // Bestellungsnummern werden bei uns als Ganzzahlen von 1 aufwärts definiert
     private int bestellungsNr;
-    private static final int BESTELLUNGSBEGINN = 1;
+    
 
     
     /**
@@ -22,7 +22,7 @@ public class Fabrik {
      */
     public Fabrik() {
         bestellungen = new ArrayList();
-        bestellungsNr = BESTELLUNGSBEGINN;
+        bestellungsNr = 1; // start bei 1
     }
 
     /**
@@ -45,12 +45,12 @@ public class Fabrik {
         if (premiumTueren >=0 && standardTueren >= 0 && standardTueren+premiumTueren>0) { 
             // Kunden mpüssen mindenstens eine türe total kaufen (Kunden aus dem Luxussegment wollen evtl nur Premiumtüren und keine Standardtüren, weshalb die Anzahl 0 sein kann, 
             //jedoch nicht negativ sein kann für die Türvarianten
-            bestellungsNr= bestellungsNr++; // wir starten bei 1 ja
             Bestellung neueBestellung = new Bestellung(standardTueren, premiumTueren, bestellungsNr);
             bestellungen.add(neueBestellung);
             System.out.println("Bestellung mit Bestellungsnummer " + bestellungsNr + " wurde erfolgreich aufgegeben.");
+            bestellungsNr++; // wir starten bei 1 ja
         } else {
-            System.out.println("Bestellung konnte nicht erfolgreich aufgegeben werden. Du musst mindenstens eine Türe bestellen."); // Meldung bei Falscheingabe
+            System.out.println("Bestellung konnte nicht erfolgreich aufgegeben werden. Du musst mindenstens eine Türe bestellen beziehungsweise kannst keine negative Anzahl bestellen."); // Meldung bei Falscheingabe
         }
         
 
