@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.target=Lieferant
+comment0.text=\n\ Die\ Klasse\ Lieferant\ simuliert\ die\ Funktion\ eines\ externen\ Lieferanten,\n\ der\ Materialien\ an\ die\ Fabrik\ liefert,\ um\ das\ Lager\ aufzuf\u00FCllen.\n\n\ Diese\ Klasse\ enth\u00E4lt\ eine\ Methode,\ die\ eine\ Bestellung\ von\ Materialien\ bearbeitet.\n\n\ @author\ Silvan\n\ @version\ 1.0\n
+comment1.params=
+comment1.target=Lieferant()
+comment1.text=\n\ Konstruktor\n
+comment2.params=holzEinheiten\ schrauben\ farbEinheiten\ kartonEinheiten\ glasEinheiten
+comment2.target=boolean\ wareBestellen(int,\ int,\ int,\ int,\ int)
+comment2.text=\n\ Simuliert\ die\ Bearbeitung\ einer\ Bestellung\ von\ Materialien.\n\ Druckt\ eine\ Nachricht\ auf\ die\ Konsole,\ dass\ die\ Bestellung\ erfolgreich\ bearbeitet\ wurde.\n
+numComments=3
