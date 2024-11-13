@@ -1,15 +1,15 @@
 #BlueJ class context
 comment0.target=Fabrik
-comment0.text=\n\ Die\ Klasse\ Fabrik\ verwaltet\ Bestellungen\ von\ T\u00FCren.\n\ Eine\ Fabrik\ kann\ Bestellungen\ entgegennehmen\ und\ diese\ ausgeben.\n\ Enth\u00E4lt\ Huaptmethode\n\ \n\ @author\ Silvan\ Ladner\n\ @version\ 1.2\n
+comment0.text=\n\ Die\ Klasse\ Fabrik\ verwaltet\ Bestellungen\ von\ T\u00FCren.\n\ Eine\ Fabrik\ kann\ Bestellungen\ entgegennehmen\ und\ diese\ ausgeben.\n\ Enth\u00E4lt\ Hauptmethode.\n\ \n\ @author\ Silvan\ Ladner\n\ @version\ 1.3\n
 comment1.params=
 comment1.target=Fabrik()
 comment1.text=\n\ Konstruktor\n
 comment2.params=args
 comment2.target=void\ main(java.lang.String[])
-comment2.text=\n\ Main\ Method.\n
+comment2.text=\n\ Main-Methode.\n
 comment3.params=premiumTueren\ standardTueren
 comment3.target=void\ bestellungAufgeben(int,\ int)
-comment3.text=\n\ Gibt\ eine\ neue\ Bestellung\ auf\ und\ f\u00FCgt\ Standard-\ und\ Premiumt\u00FCren\ hinzu.\n\ \n\ @param\ standardTueren\ Anzahl\ der\ Standardt\u00FCren\n\ @param\ premiumTueren\ Anzahl\ der\ Premiumt\u00FCren\n
+comment3.text=\n\ Gibt\ eine\ neue\ Bestellung\ auf\ und\ f\u00FCgt\ Standard-\ und\ Premiumt\u00FCren\ hinzu.\n\ \n\ @param\ premiumTueren\ Anzahl\ der\ Premiumt\u00FCren\n\ @param\ standardTueren\ Anzahl\ der\ Standardt\u00FCren\n
 comment4.params=
 comment4.target=void\ bestellungenAusgeben()
 comment4.text=\n\ Gibt\ alle\ Bestellungen\ aus,\ einschlie\u00DFlich\ der\ Details\ zu\ den\ Standard-\ und\ Premiumt\u00FCren.\n

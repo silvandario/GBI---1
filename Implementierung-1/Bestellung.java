@@ -4,14 +4,16 @@ import java.util.ArrayList;
  * Klasse Bestellung - repräsentiert eine Bestellung von Standard- und Premiumtüren.
  * 
  * @author Silvan Ladner
- * @version 2.0
+ * @version 2.2
  */
 public class Bestellung {
     
-    private ArrayList<Produkt> bestellteProdukte = new ArrayList<>(); // Liste, die (anders als Array) wachsen (und schrumpfen) kann - enthält alle bestellten Produkte.
-    private boolean bestellBestaetigung = false; // True (false) ebedeutet, dass Btestellung bestätigt wurde (nicht)
+    private static final int MAX_TEILE_PRO_TYP = 10_000; // Maximale Anzahl von Teilen pro Typ
+
+    private ArrayList<Produkt> bestellteProdukte = new ArrayList<>(); 
+    private boolean bestellBestaetigung = false; 
     private int bestellungsNr;
-    private int beschaffungsZeit;
+    private int beschaffungsZeit; // Standardwert 0 ist hier ausreichend; wird nicht im Konstruktor berechnet.
     private int anzahlStandardTueren;
     private int anzahlPremiumTueren;
 
@@ -21,37 +23,66 @@ public class Bestellung {
      * @param anzahlStandardTueren Anzahl der bestellten Standardtüren
      * @param anzahlPremiumTueren Anzahl der bestellten Premiumtüren
      * @param bestellungsNr Bestellnummer der Bestellung
+     * @throws IllegalArgumentException bei negativen Werten oder Überschreitung der Maximalgrenze
      */
     public Bestellung(int anzahlStandardTueren, int anzahlPremiumTueren, int bestellungsNr) {
-        this.anzahlStandardTueren = Math.abs(anzahlStandardTueren);
-        this.anzahlPremiumTueren = Math.abs(anzahlPremiumTueren);
+        this.anzahlStandardTueren = validiereEingabe(anzahlStandardTueren, "Standardtüren");
+        this.anzahlPremiumTueren = validiereEingabe(anzahlPremiumTueren, "Premiumtüren");
         this.bestellungsNr = bestellungsNr;
 
-        // Math abs um eine Eingabe wie -5 (woebi das "-" als Auflistungszeichen gemeint ist)in einen positiven Wert umzuwandeln)
-        for (int i = 0; i < anzahlStandardTueren; i++) {
+        // Initialisiert die Liste der bestellten Produkte basierend auf den Eingabewerten
+        for (int i = 0; i < this.anzahlStandardTueren; i++) {
             bestellteProdukte.add(new Standardtuer());
         }
-        for (int i = 0; i < anzahlPremiumTueren; i++) {
+        for (int i = 0; i < this.anzahlPremiumTueren; i++) {
             bestellteProdukte.add(new Premiumtuer());
         }
+
+        // Hinweis: beschaffungsZeit bleibt 0, bis sie explizit gesetzt wird.
     }
     
     /**
-     * standardTuereHinzufuegen fügt eine Standardtuer der bestellteProdukte Liste hinzu nachdem diese Standardtuer erstellt wurde
-     * Hilft fpür das einzelne Hinzufügen
+     * Validiert die Eingabe für Anzahl von Produkten.
+     * 
+     * @param anzahl Anzahl der Produkte
+     * @param typ Typ des Produkts (z. B. "Standardtüren" oder "Premiumtüren")
+     * @return gültige Anzahl der Produkte
+     * @throws IllegalArgumentException bei ungültigen Werten
      */
-    public void standartTuereHinzufuegen() {
-       Standardtuer standardtuer = new Standardtuer();
-       bestellteProdukte.add(standardtuer);
+    private int validiereEingabe(int anzahl, String typ) {
+        if (anzahl < 0) {
+            throw new IllegalArgumentException(typ + " darf keine negative Zahl sein. Bitte geben Sie einen positiven Wert ein.");
+        }
+        if (anzahl > MAX_TEILE_PRO_TYP) {
+            throw new IllegalArgumentException(typ + " dürfen maximal " + MAX_TEILE_PRO_TYP + " Stück betragen.");
+        }
+        return anzahl;
+    }
+
+    /**
+     * Fügt eine Standardtür der Bestellung hinzu, wenn die Maximalgrenze nicht überschritten wird.
+     * 
+     * @throws IllegalStateException bei Überschreitung der Maximalgrenze
+     */
+    public void standardTuereHinzufuegen() {
+        if (anzahlStandardTueren >= MAX_TEILE_PRO_TYP) {
+            throw new IllegalStateException("Maximale Anzahl von Standardtüren erreicht. Keine weiteren können hinzugefügt werden.");
+        }
+        bestellteProdukte.add(new Standardtuer());
+        anzahlStandardTueren++;
     }
     
     /**
-     * premiumTuereHinzufuegen fügt eine Standardtuer der bestellteProdukte Liste hinzu nachdem diese Standardtuer erstellt wurde
-     *  * Hilft fpür das einzelne Hinzufügen
+     * Fügt eine Premiumtür der Bestellung hinzu, wenn die Maximalgrenze nicht überschritten wird.
+     * 
+     * @throws IllegalStateException bei Überschreitung der Maximalgrenze
      */
     public void premiumTuereHinzufuegen() {
-       Premiumtuer premiumtuer = new Premiumtuer();
-       bestellteProdukte.add(premiumtuer);
+        if (anzahlPremiumTueren >= MAX_TEILE_PRO_TYP) {
+            throw new IllegalStateException("Maximale Anzahl von Premiumtüren erreicht. Keine weiteren können hinzugefügt werden.");
+        }
+        bestellteProdukte.add(new Premiumtuer());
+        anzahlPremiumTueren++;
     }
     
     /**

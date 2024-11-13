@@ -1,16 +1,19 @@
 #BlueJ class context
 comment0.target=FabrikTest
-comment0.text=\n\ Diese\ Testklasse\ pr\u00FCft\ die\ Fabrik.\ Da\ void\ Methoden\ vorhanden\ sind,\ wobei\ oft\ Output\ in\ die\ Konsole\ geprintet\ wird,\ wird\ deiser\ Output\ als\ Referenz\ genommen.\n\ \n\ @author\ Silvan\ Ladner\n\ @version\ 3.2\n
+comment0.text=\n\ Diese\ Testklasse\ pr\u00FCft\ die\ Fabrik.\ Da\ void-Methoden\ vorhanden\ sind,\ wobei\ oft\ Output\ in\ die\ Konsole\ geprintet\ wird,\ \n\ wird\ dieser\ Output\ als\ Referenz\ genommen.\n\ \n\ @author\ Silvan\ Ladner\n\ @version\ 3.3\n
 comment1.params=
 comment1.target=void\ setUp()
 comment2.params=
 comment2.target=void\ tearDown()
 comment3.params=
-comment3.target=void\ testErfolgreicheBestellung()
+comment3.target=java.lang.String\ getTrimmedOutput()
+comment3.text=\n\ Hilfsmethode,\ um\ die\ aktuelle\ Konsolenausgabe\ zu\ holen\ und\ zu\ trimmen.\n\ \n\ @return\ getrimmte\ Konsolenausgabe\n
 comment4.params=
-comment4.target=void\ testLeereBestellung()
+comment4.target=void\ testErfolgreicheBestellung()
 comment5.params=
-comment5.target=void\ testNegativeBestellung()
+comment5.target=void\ testLeereBestellung()
 comment6.params=
-comment6.target=void\ testBestellungsNummernKorrekt()
-numComments=7
+comment6.target=void\ testNegativeBestellung()
+comment7.params=
+comment7.target=void\ testBestellungsNummernKorrekt()
+numComments=8
