@@ -1,0 +1,14 @@
+#BlueJ class context
+comment0.target=LieferantTest
+comment0.text=\n\ Testklasse\ f\u00FCr\ die\ Klasse\ Lieferant.\n\ \u00DCberpr\u00FCft\ die\ Funktionalit\u00E4t\ der\ Methode\ `wareBestellen`.\n\ \n\ @author\ Silvan\n\ @version\ 1.1\n
+comment1.params=
+comment1.target=void\ testWareBestellenErfolgreich()
+comment2.params=
+comment2.target=void\ testWareBestellenGesamtmengeNull()
+comment3.params=
+comment3.target=void\ testWareBestellenUeberMaxWert()
+comment4.params=
+comment4.target=void\ testWareBestellenNegativeWerte()
+comment5.params=
+comment5.target=void\ testWareBestellenGenauAmLimit()
+numComments=6

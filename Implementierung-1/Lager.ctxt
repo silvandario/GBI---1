@@ -1,0 +1,15 @@
+#BlueJ class context
+comment0.target=Lager
+comment1.params=
+comment1.target=Lager()
+comment1.text=\n\ Konstruktor\ der\ Klasse\ Lager\n
+comment2.params=kundenBestellung
+comment2.target=int\ gibBeschaffungsZeit(Bestellung)
+comment2.text=\n\ Die\ Methode\ gibBeschaffungsZeit\ liefert\ die\ Beschaffungszeit\ in\ Einheiten\ von\ Tagen\n\ 0\ Tage,\ wenn\ alle\ Materialien\ vorhanden\ sind\ und\ \ asDSADSDSADSAD\n\ 2\ Tage,\ wenn\ diese\ nachbestellt\ werden\ m\u00FCssen\ sadsadsadsadxsaxadsd\n\n\ @param\ Bestellung\ \ eine\ Kundenbestellung\ mit\ allen\ bestellten\ Produkten\ im\ Array\ of\ Produkt\ aDXSAXSADSAd\n\ @return\ Beschaffungszeit\ in\ Tagen\ DSADadsxa\n
+comment3.params=
+comment3.target=void\ lagerAuffuellen()
+comment3.text=\n\ Methode\ lagerAuffuellen\ bestellt\ alle\ notwendigen\ Materialien\ nach,\ so\ dass\ das\ Lager\ wieder\ voll\ ist.\n
+comment4.params=
+comment4.target=void\ lagerBestandAusgeben()
+comment4.text=\n\ Methode\ lagerBestandAusgeben\ gibt\ den\ aktuellen\ Lagerbestand\ aller\ Komponenten\ aus*\ \n
+numComments=5

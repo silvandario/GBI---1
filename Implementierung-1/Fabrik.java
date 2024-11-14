@@ -13,6 +13,7 @@ public class Fabrik {
 
     private ArrayList<Bestellung> bestellungen = new ArrayList<>(); // Liste aller Bestellungen
     private int bestellungsNr; // Bestellnummern starten bei 1
+    private Lager lager; // neu kommt das Lager vom typ Lager hinzu
 
     /**
      * Konstruktor
@@ -20,6 +21,7 @@ public class Fabrik {
     public Fabrik() {
         bestellungen = new ArrayList<>();
         bestellungsNr = 1;
+        lager = new Lager(); // neu auch Lager
     }
 
     /**
@@ -59,6 +61,14 @@ public class Fabrik {
         }
 
         scanner.close();
+    }
+    /**
+     * Methode zum auffüllen des Lagesr und Ausgabe des akteuellen Bestenades anschliessend* 
+     */
+    
+    public void lagerAuffuellen(){
+        lager.lagerAuffuellen();
+        lager.lagerBestandAusgeben();
     }
 
     /**

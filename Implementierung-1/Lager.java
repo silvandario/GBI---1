@@ -37,7 +37,7 @@ public class Lager {
     }
     
     /**
-     * Methode gibBeschaffungsZeit liefert die Beschaffungszeit in Tagen:  adfsfsadsdd
+     * Die Methode gibBeschaffungsZeit liefert die Beschaffungszeit in Einheiten von Tagen
      * 0 Tage, wenn alle Materialien vorhanden sind und  asDSADSDSADSAD
      * 2 Tage, wenn diese nachbestellt werden müssen sadsadsadsadxsaxadsd
      *
@@ -54,21 +54,21 @@ public class Lager {
         
         for(Produkt produkt : kundenBestellung.gibBestellteProdukte()){
             if(produkt instanceof Standardtuer){
-                benoetigtesHolz = benoetigtesHolz + Standardtuer.gibBenoetigteHolzeinheiten();
-                benoetigteSchrauben = benoetigteSchrauben + Standardtuer.gibBenoetigteSchrauben();
-                benoetigteFarbe = benoetigteFarbe + Standardtuer.gibBenoetigteFarbeinheiten();
-                benoetigterKarton = benoetigterKarton + Standardtuer.gibBenoetigteKartoneinheiten();
+                benoetigtesHolz = benoetigtesHolz + Standardtuer.getHolzeinheiten();
+                benoetigteSchrauben = benoetigteSchrauben + Standardtuer.getSchrauben();
+                benoetigteFarbe = benoetigteFarbe + Standardtuer.getFarbeinheiten();
+                benoetigterKarton = benoetigterKarton + Standardtuer.getKartoneinheiten();
      
             }else if(produkt instanceof Premiumtuer){
-                benoetigtesHolz = benoetigtesHolz + Premiumtuer.gibBenoetigteHolzeinheiten();
-                benoetigteSchrauben = benoetigteSchrauben + Premiumtuer.gibBenoetigteSchrauben();
-                benoetigteFarbe = benoetigteFarbe + Premiumtuer.gibBenoetigteFarbeinheiten();
-                benoetigterKarton = benoetigterKarton + Premiumtuer.gibBenoetigteKartoneinheiten();
-                benoetigtesGlas = Premiumtuer.gibBenoetigteAnzahlKissen();
+                benoetigtesHolz = benoetigtesHolz + Premiumtuer.getHolzeinheiten();
+                benoetigteSchrauben = benoetigteSchrauben + Premiumtuer.getSchrauben();
+                benoetigteFarbe = benoetigteFarbe + Premiumtuer.getFarbeinheiten();
+                benoetigterKarton = benoetigterKarton + Premiumtuer.getKartoneinheiten();
+                benoetigtesGlas = Premiumtuer.getGlaseinheiten();
             }
         }        
         if(vorhandeneHolzeinheiten >= benoetigtesHolz && vorhandeneSchrauben >= benoetigteSchrauben &&  
-            vorhandeneGlas >= benoetigtesGlas && vorhandeneFarbeinheiten >= benoetigteFarbe && 
+            vorhandeneGlaseinheiten >= benoetigtesGlas && vorhandeneFarbeinheiten >= benoetigteFarbe && 
             vorhandeneKartoneinheiten >= benoetigterKarton){
                 return 0;             
             }else{ 
@@ -97,6 +97,21 @@ public class Lager {
         }else{
             System.out.println("Bestellung hat nicht funktioniert! Schade :(");
         }
+    }
+    
+    /**
+     * Methode lagerBestandAusgeben gibt den aktuellen Lagerbestand aller Komponenten aus* 
+     */    
+    
+    public void lagerBestandAusgeben(){
+            System.out.println("-----------Lagerbestand----------- ");
+            System.out.println(vorhandeneHolzeinheiten + " Holzeinheiten vorhanden");
+            System.out.println(vorhandeneSchrauben +" Schrauben vorhanden");
+            System.out.println(vorhandeneFarbeinheiten+ " Farbeinheiten vorhanden");
+            System.out.println(vorhandeneKartoneinheiten + " Kartoneinheiten vorhanden");
+            System.out.println(vorhandeneGlaseinheiten + " Glaseinheiten vorhanden");            
+            System.out.println("----------- ----------- -----------"); 
+    
     }
 
     

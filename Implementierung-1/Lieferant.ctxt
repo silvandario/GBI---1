@@ -6,5 +6,5 @@ comment1.target=Lieferant()
 comment1.text=\n\ Konstruktor\n
 comment2.params=holzEinheiten\ schrauben\ farbEinheiten\ kartonEinheiten\ glasEinheiten
 comment2.target=boolean\ wareBestellen(int,\ int,\ int,\ int,\ int)
-comment2.text=\n\ Simuliert\ die\ Bearbeitung\ einer\ Bestellung\ von\ Materialien.\n\ Druckt\ eine\ Nachricht\ auf\ die\ Konsole,\ dass\ die\ Bestellung\ erfolgreich\ bearbeitet\ wurde.\n
+comment2.text=\n\ Simuliert\ die\ Bearbeitung\ einer\ Bestellung\ von\ Materialien\ des\ Kunden.\n\ \n\ @param\ holzEinheiten\ \ \ \ Anzahl\ der\ bestellten\ Holzeinheiten\n\ @param\ schrauben\ \ \ \ \ \ \ \ Anzahl\ der\ bestellten\ Schrauben\n\ @param\ farbEinheiten\ \ \ \ Anzahl\ der\ bestellten\ Farbeinheiten\n\ @param\ kartonEinheiten\ \ Anzahl\ der\ bestellten\ Kartoneinheiten\n\ @param\ glasEinheiten\ \ \ \ Anzahl\ der\ bestellten\ Glaseinheiten\n\ @return\ true,\ wenn\ die\ Bestellung\ erfolgreich\ war,\ andernfalls\ false\n
 numComments=3
