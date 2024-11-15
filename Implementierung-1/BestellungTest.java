@@ -2,6 +2,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import java.util.ArrayList;
 
 /**
  * Die Test-Klasse BestellungTest. Prüft, ob verschiedene Arten der Bestellungen korrekt aufgegeben werden können und Bestellinformationen korrekt ausgegeben werden.
@@ -109,5 +110,44 @@ public class BestellungTest {
         // Assert
         String expectedMessage = "Standardtüren dürfen maximal 10000 Stück betragen.";
         assertTrue(exception.getMessage().contains(expectedMessage));
+    }
+    @Test
+    public void testBestellungBestaetigen() {
+        Bestellung bestellung = new Bestellung(10, 20, 1);
+        bestellung.bestellungBestaetigen();
+        //asset
+        assertTrue(bestellung.gibBestellBestaetigung());
+    }
+
+    @Test
+    public void testBeschaffungsZeitSetzenUndAbfragen() {
+        Bestellung bestellung = new Bestellung(10, 20, 1);
+        bestellung.setzBeschaffungsZeit(5);
+        // asset
+        assertEquals(5, bestellung.gibBeschaffungsZeit());
+    }
+
+    @Test
+    public void testLieferZeitSetzenUndAbfragen() {
+        Bestellung bestellung = new Bestellung(10, 20, 1);
+        bestellung.setzeLieferZeit(2.5f);
+        // Assert
+        assertEquals(2.5f, bestellung.gibLieferZeit());
+    }
+
+    @Test
+    public void testLiefereBestellteProdukte() {
+        Bestellung bestellung = new Bestellung(5, 3, 1);
+        ArrayList<Produkt> produkte = bestellung.liefereBestellteProdukte();
+        // Assert
+        assertEquals(8, produkte.size());
+    }
+    @Test
+    public void testGibBestellteProdukte() {
+        Bestellung bestellung = new Bestellung(3, 2, 1);
+        ArrayList<Produkt> produkte = bestellung.gibBestellteProdukte();
+        assertEquals(5, produkte.size());
+        assertTrue(produkte.get(0) instanceof Standardtuer);
+        assertTrue(produkte.get(3) instanceof Premiumtuer);
     }
 }

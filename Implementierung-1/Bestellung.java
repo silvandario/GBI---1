@@ -12,10 +12,11 @@ public class Bestellung {
 
     private ArrayList<Produkt> bestellteProdukte = new ArrayList<>(); 
     private boolean bestellBestaetigung = false; 
-    private int bestellungsNr;
-    private int beschaffungsZeit; // Standardwert 0 ist hier ausreichend; wird nicht im Konstruktor berechnet.
+    private int bestellungsNr=1;
+    private int beschaffungsZeit; // Standardwert -1
     private int anzahlStandardTueren;
     private int anzahlPremiumTueren;
+    private float lieferZeit; // wie lange dauert es, bis lieferung umdisponiert; Standartwert -1
 
     /**
      * Konstruktor für Bestellung.
@@ -29,7 +30,8 @@ public class Bestellung {
         this.anzahlStandardTueren = validiereEingabe(anzahlStandardTueren, "Standardtüren");
         this.anzahlPremiumTueren = validiereEingabe(anzahlPremiumTueren, "Premiumtüren");
         this.bestellungsNr = bestellungsNr;
-
+        lieferZeit = -1;
+        beschaffungsZeit = -1;    
         // Initialisiert die Liste der bestellten Produkte basierend auf den Eingabewerten
         for (int i = 0; i < this.anzahlStandardTueren; i++) {
             bestellteProdukte.add(new Standardtuer());
@@ -38,7 +40,6 @@ public class Bestellung {
             bestellteProdukte.add(new Premiumtuer());
         }
 
-        // Hinweis: beschaffungsZeit bleibt 0, bis sie explizit gesetzt wird.
     }
     
     /**
@@ -84,7 +85,16 @@ public class Bestellung {
         bestellteProdukte.add(new Premiumtuer());
         anzahlPremiumTueren++;
     }
-    
+    /**
+     * EMthode liefert Liste mit bestellten Produkten 
+     * 
+     * @return Liste mit den bestellten Produkten
+     */      
+    public ArrayList<Produkt> liefereBestellteProdukte()
+    {
+        
+        return bestellteProdukte;         
+    }
     /**
      * Bestätigt die Bestellung.
      */
@@ -106,7 +116,7 @@ public class Bestellung {
      * 
      * @param zeit Beschaffungszeit (in Tagen)
      */
-    public void setzeBeschaffungsZeit(int zeit) {
+    public void setzBeschaffungsZeit(int zeit) {
         this.beschaffungsZeit = zeit;
     }
 
@@ -117,6 +127,22 @@ public class Bestellung {
      */
     public int gibBeschaffungsZeit() {
         return beschaffungsZeit;
+    }
+    /**
+     * Setzt die Lieferzeit der Bestellungwird übergeben und gesetzt* 
+     * @param zeit Beschaffungszeit (in Tagen)
+     */
+    public void setzeLieferZeit(float lieferZeit) {
+        this.lieferZeit = lieferZeit;
+    }
+
+    /**
+     * Gibt die Lieferzeit der Bestellung zurück.
+     * 
+     * @return Beschaffungszeit in Tagen
+     */
+    public float gibLieferZeit() {
+        return lieferZeit;
     }
 
     /**

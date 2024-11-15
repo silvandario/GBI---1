@@ -9,11 +9,13 @@ import java.util.Scanner;
  * @author Silvan Ladner
  * @version 1.3
  */
+
 public class Fabrik {
 
     private ArrayList<Bestellung> bestellungen = new ArrayList<>(); // Liste aller Bestellungen
     private int bestellungsNr; // Bestellnummern starten bei 1
-    private Lager lager; // neu kommt das Lager vom typ Lager hinzu
+    private static Lager lager; // Statische Variable existiert nur einaml
+    
 
     /**
      * Konstruktor
@@ -22,6 +24,7 @@ public class Fabrik {
         bestellungen = new ArrayList<>();
         bestellungsNr = 1;
         lager = new Lager(); // neu auch Lager
+        
     }
 
     /**
@@ -66,11 +69,17 @@ public class Fabrik {
      * Methode zum auffüllen des Lagesr und Ausgabe des akteuellen Bestenades anschliessend* 
      */
     
-    public void lagerAuffuellen(){
+    public void lagerAuffuellenUndAusgeben(){
         lager.lagerAuffuellen();
         lager.lagerBestandAusgeben();
     }
-
+    /**
+     * Methode Ausgabe des akteuellen Bestenades vom Lager* 
+     */
+    
+    public void lagerbestandVonFarbrik(){
+        lager.lagerBestandAusgeben();
+    }
     /**
      * Gibt eine neue Bestellung auf und fügt Standard- und Premiumtüren hinzu.
      * 
@@ -78,14 +87,26 @@ public class Fabrik {
      * @param standardTueren Anzahl der Standardtüren
      */
     public void bestellungAufgeben(int premiumTueren, int standardTueren) {
+        int beschaffungsZeit = -1;
+        float lieferzeit = -1;
         if (premiumTueren >= 0 && standardTueren >= 0 && standardTueren + premiumTueren > 0) {
             Bestellung neueBestellung = new Bestellung(standardTueren, premiumTueren, bestellungsNr);
-            bestellungen.add(neueBestellung);
-            System.out.println("Bestellung mit Bestellungsnummer " + bestellungsNr + " wurde erfolgreich aufgegeben.");
-            bestellungsNr++;
+            beschaffungsZeit=lager.gibBeschaffungsZeit(neueBestellung); // entweder 0 oder 2; sodass folgender if loop ausgeführt wird
+            if(beschaffungsZeit>=0){
+                neueBestellung.setzBeschaffungsZeit(beschaffungsZeit);
+                lieferzeit = (Standardtuer.getProduktionszeit()*standardTueren+Premiumtuer.getProduktionszeit()*premiumTueren)/(60*24) + beschaffungsZeit +1; // zuerst Lieferzeit berechnen
+                neueBestellung.setzeLieferZeit(lieferzeit); // nun wird die LIeferzeit offiziell gesetzt
+                neueBestellung.bestellungBestaetigen();
+                // Lagerbestand reduzieren: ANPASSUNGEN NOCH MÖGLICH GEMÄSS AUFGABE 3
+                lager.lagerbestandReduzieren(neueBestellung);
+                bestellungen.add(neueBestellung);
+                System.out.println("Bestellung mit Bestellungsnummer " + bestellungsNr + " wurde erfolgreich aufgegeben.");
+                bestellungsNr++;
+            } else {
+                System.out.println("Bestellung konnte nicht erfolgreich aufgegeben werden. Unser Supply Chain management hat versagt.");
+            } 
         } else {
             System.out.println("Bestellung konnte nicht erfolgreich aufgegeben werden. Du musst mindestens eine Türe bestellen beziehungsweise kannst keine negative Anzahl bestellen.");
-
         }
     }
 
@@ -105,5 +126,30 @@ public class Fabrik {
                 System.out.println("--------------------------------------------");
             }
         }
+    }
+    /**
+     * GEtter Methode für Bestellungen
+     */
+    public ArrayList<Bestellung> getBestellungen() {
+    return bestellungen;
+    }
+     /**
+     * Getter Methoden der Fabrik (für die testklasse, wir wollen direkt aus der "gebauten" Farbik zugreiffen)* 
+     */
+    
+    public int getVorhandeneFarbeinheiten(){
+        return lager.getVorhandeneFarbeinheiten();
+    }
+     public int getVorhandeneHolzeinheiten(){
+        return lager.getVorhandeneHolzeinheiten();
+    }
+     public int getVorhandeneSchrauben(){
+        return lager.getVorhandeneSchrauben();
+    }
+     public int getVorhandeneKartoneinheiten(){
+        return lager.getVorhandeneKartoneinheiten();
+    }
+     public int getVorhandeneGlaseinheiten(){
+        return lager.getVorhandeneGlaseinheiten();
     }
 }
