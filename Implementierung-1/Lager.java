@@ -108,6 +108,7 @@ public class Lager {
             System.out.println("---Lager wieder bei 100% aufgefüllt");
         }else{
             System.out.println("Bestellung hat nicht funktioniert! Schade :(");
+            throw new RuntimeException("Lieferant konnte Materialien nicht liefern. Lager nicht aufgefüllt.");
         }
         }
         
