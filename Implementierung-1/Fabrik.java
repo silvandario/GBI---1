@@ -94,6 +94,11 @@ public class Fabrik {
             beschaffungsZeit=lager.gibBeschaffungsZeit(neueBestellung); // entweder 0 oder 2; sodass folgender if loop ausgeführt wird
             if(beschaffungsZeit>=0){
                 neueBestellung.setzBeschaffungsZeit(beschaffungsZeit);
+                if (beschaffungsZeit > 0) {
+                    System.out.println("Materialien unzureichend. Lager wird aufgefüllt...");
+                    lager.lagerAuffuellen();
+                    System.out.println("Lager erfolgreich aufgefüllt.");
+                } 
                 lieferzeit = (Standardtuer.getProduktionszeit()*standardTueren+Premiumtuer.getProduktionszeit()*premiumTueren)/(60*24) + beschaffungsZeit +1; // zuerst Lieferzeit berechnen
                 neueBestellung.setzeLieferZeit(lieferzeit); // nun wird die LIeferzeit offiziell gesetzt
                 neueBestellung.bestellungBestaetigen();
