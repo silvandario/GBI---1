@@ -1,23 +1,21 @@
 
 /**
- * Beschreiben Sie hier die Klasse Holzbearbeitungs_Roboter.
+ * Beschreiben Sie hier die Klasse Verpackungs_Roboter.
  * 
- * @author Silvan
- * @version 1
- * 
- * * In Übungslektion bei Alex:  nur eine Variante ist notwendig, einfach zum zeigen, dass es funktioniert
+ * @author (Ihr Name) 
+ * @version (eine Versionsnummer oder ein Datum)
  */
-
-public class Holzbearbeitungs_Roboter extends Roboter
+public class Verpackungs_Roboter extends Roboter
 {
     // Instanzvariablen - ersetzen Sie das folgende Beispiel mit Ihren Variablen
     private int x;
 
     /**
-     * Konstruktor für Objekte der Klasse Holzbearbeitungs_Roboter
+     * Konstruktor für Objekte der Klasse Verpackungs_Roboter
      */
-    public Holzbearbeitungs_Roboter(String name)
+    public Verpackungs_Roboter(String name)
     {
+        // Instanzvariable initialisieren
         super(name);
     }
 

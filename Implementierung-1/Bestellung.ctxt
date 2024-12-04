@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Bestellung
-comment0.text=\n\ Klasse\ Bestellung\ -\ repr\u00E4sentiert\ eine\ Bestellung\ von\ Standard-\ und\ Premiumt\u00FCren.\n\ \n\ @author\ Silvan\ Ladner\n\ @version\ 2.2\n
+comment0.text=\n\ Klasse\ Bestellung\ -\ repr\u00E4sentiert\ eine\ Bestellung\ von\ Standard-\ und\ Premiumt\u00FCren.\n\ \n\ @author\ Silvan\ Ladner\n\ @version\ 3.2\n
 comment1.params=anzahlStandardTueren\ anzahlPremiumTueren\ bestellungsNr
 comment1.target=Bestellung(int,\ int,\ int)
 comment1.text=\n\ Konstruktor\ f\u00FCr\ Bestellung.\n\ \n\ @param\ anzahlStandardTueren\ Anzahl\ der\ bestellten\ Standardt\u00FCren\n\ @param\ anzahlPremiumTueren\ Anzahl\ der\ bestellten\ Premiumt\u00FCren\n\ @param\ bestellungsNr\ Bestellnummer\ der\ Bestellung\n\ @throws\ IllegalArgumentException\ bei\ negativen\ Werten\ oder\ \u00DCberschreitung\ der\ Maximalgrenze\n
@@ -22,6 +22,9 @@ comment14.text=\n\ Gibt\ die\ Anzahl\ der\ Premiumt\u00FCren\ zur\u00FCck.\n\ \n
 comment15.params=
 comment15.target=java.util.ArrayList\ gibBestellteProdukte()
 comment15.text=\n\ Gibt\ die\ Liste\ der\ bestellten\ Produkte\ zur\u00FCck.\n\ \n\ @return\ Liste\ der\ bestellten\ Produkte\n
+comment16.params=
+comment16.target=void\ setzeAlleProdukteProduziert()
+comment16.text=\n\ Gibt\ Boolean\ an,\ ob\ alle\ produkte\ produziert\ sibd\n
 comment2.params=anzahl\ typ
 comment2.target=int\ validiereEingabe(int,\ java.lang.String)
 comment2.text=\n\ Validiert\ die\ Eingabe\ f\u00FCr\ Anzahl\ von\ Produkten.\n\ \n\ @param\ anzahl\ Anzahl\ der\ Produkte\n\ @param\ typ\ Typ\ des\ Produkts\ (z.\ B.\ "Standardt\u00FCren"\ oder\ "Premiumt\u00FCren")\n\ @return\ g\u00FCltige\ Anzahl\ der\ Produkte\n\ @throws\ IllegalArgumentException\ bei\ ung\u00FCltigen\ Werten\n
@@ -46,4 +49,4 @@ comment8.text=\n\ Setzt\ die\ Beschaffungszeit\ der\ Bestellung.\n\ \n\ @param\ 
 comment9.params=
 comment9.target=int\ gibBeschaffungsZeit()
 comment9.text=\n\ Gibt\ die\ Beschaffungszeit\ der\ Bestellung\ zur\u00FCck.\n\ \n\ @return\ Beschaffungszeit\ in\ Tagen\n
-numComments=16
+numComments=17

@@ -1,13 +1,19 @@
 #BlueJ class context
 comment0.target=Produkt
-comment0.text=\n\ Die\ Klasse\ Produkt\ wird\ von\ Standardtuer\ und\ Premiumtuer\ erweitert.\ Produkt\ ist\ also\ Superklasse\ von\ Standard-\ und\ Premiumt\u00FCr.\n\ Jedes\ Produkt\ hat\ einen\ Zustand,\ der\ den\ Status\ des\ Produkts\ beschreibt.\n\ \n\ @author\ Silvan\ Ladner\n\ @version\ 2.1\n
+comment0.text=\n\ Die\ Klasse\ Produkt\ wird\ von\ Standardtuer\ und\ Premiumtuer\ erweitert.\ Produkt\ ist\ also\ Superklasse\ von\ Standard-\ und\ Premiumt\u00FCr.\n\ Jedes\ Produkt\ hat\ einen\ Zustand,\ der\ den\ Status\ des\ Produkts\ beschreibt.\n\ \n\ @author\ Silvan\ Ladner\n\ @version\ 3.1\n
 comment1.params=
 comment1.target=Produkt()
 comment1.text=\n\ no-args-Konstruktor\n
 comment2.params=neuerZustand
 comment2.target=void\ zustandAendern(int)
 comment2.text=\n\ \u00C4ndert\ den\ Zustand\ des\ Produkts.\n\ \n\ @param\ neuerZustand\ der\ neue\ Zustand\ des\ Produkts\n
-comment3.params=
-comment3.target=int\ getAktuellerZustand()
-comment3.text=\n\ Gibt\ den\ aktuellen\ Zustand\ des\ Produkts\ zur\u00FCck.\n\ \n\ @return\ aktueller\ Zustand\ des\ Produkts\n
-numComments=4
+comment3.params=produktionsAblauf
+comment3.target=void\ setzteProduktionsAblauf(java.util.LinkedList)
+comment3.text=\n\ Hier\ wird\ f\u00FCr\ das\ Produkt\ festgelegt,\ in\ welcher\ Reihenfolge\ es\ von\n\ den\ Robotern\ bearbeitet\ wird\n\ \n\ @param\ produktionsAblauf\ LinkedList<Roboter>\ die\ List\ mit\ der\ Reihenfolge\ der\ zu\ druchlaufenden\ Roboter\n
+comment4.params=
+comment4.target=void\ naechsteProduktionsStation()
+comment4.text=\n\ Nach\ Bearbeitung\ durch\ Roboter\ kommt\ Produkt\ zur\ n\u00E4chsten\ Station\ bzw\ Roboter,\ spirch\:\n\ \u00C4ndert\ den\ aktuellen\ Zustand\ des\ Produkts.\ Der\ Zustand\ ist\ bei\ Initialiserung\ 1\ und\ wird\ entsprechend\ Beschreib\ oben\ auf\ 2\ bzw.\ 3\ ge\u00E4ndert\n
+comment5.params=
+comment5.target=int\ getAktuellerZustand()
+comment5.text=\n\ Gibt\ den\ aktuellen\ Zustand\ des\ Produkts\ zur\u00FCck.\n\ \n\ @return\ aktueller\ Zustand\ des\ Produkts\n
+numComments=6

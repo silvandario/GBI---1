@@ -15,6 +15,7 @@ public class Fabrik {
     private ArrayList<Bestellung> bestellungen = new ArrayList<>(); // Liste aller Bestellungen
     private int bestellungsNr; // Bestellnummern starten bei 1
     private static Lager lager; // Statische Variable existiert nur einaml
+    private Produktions_Manager produktionsManager;
     
 
     /**
@@ -24,6 +25,8 @@ public class Fabrik {
         bestellungen = new ArrayList<>();
         bestellungsNr = 1;
         lager = new Lager(); // neu auch Lager
+        produktionsManager = new Produktions_Manager(this, lager);
+        produktionsManager.start();
         
     }
 
@@ -103,8 +106,8 @@ public class Fabrik {
                 neueBestellung.setzeLieferZeit(lieferzeit); // nun wird die LIeferzeit offiziell gesetzt
                 neueBestellung.bestellungBestaetigen();
                 // Lagerbestand reduzieren: ANPASSUNGEN NOCH MÖGLICH GEMÄSS AUFGABE 3
-                lager.lagerbestandReduzieren(neueBestellung);
-                bestellungen.add(neueBestellung);
+                bestellungen.add(bestellung);  
+                produktionsManager.fuegeZuVerarbeitendeBestellungenHinzu(bestellung);
                 System.out.println("Bestellung mit Bestellungsnummer " + bestellungsNr + " wurde erfolgreich aufgegeben.");
                 bestellungsNr++;
             } else {

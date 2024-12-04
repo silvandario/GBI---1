@@ -175,7 +175,14 @@ public class Lager {
     /**
      * entsprechende Methode zur Reduktion des Lagerbestands nach einer Bestellung, die bei bestellung aufgerufgen wird
      */
-    public void lagerbestandReduzieren(Bestellung kundenBestellung) {
+    public boolean liefereMaterial(Bestellung kundenBestellung) { //TODO Rename Tests
+        int benoetigtesHolz = 0;
+        int benoetigteSchrauben = 0;
+        int benoetigteFarbe = 0;
+        int benoetigterKarton = 0;
+        int benoetigtesGlas = 0;
+        
+        boolean materialVorhanden = false; 
         for (Produkt produkt : kundenBestellung.gibBestellteProdukte()) {
             if (produkt instanceof Standardtuer) {
                 vorhandeneHolzeinheiten -= Standardtuer.getHolzeinheiten();
@@ -190,6 +197,20 @@ public class Lager {
                 vorhandeneGlaseinheiten -= Premiumtuer.getGlaseinheiten();
             }
         }
+        if(vorhandeneHolzeinheiten >= benoetigtesHolz && vorhandeneSchrauben >= benoetigteSchrauben &&  
+            vorhandeneFarbeinheiten >= benoetigteFarbe && vorhandeneFarbeinheiten >= benoetigteFarbe && 
+            vorhandeneKartoneinheiten >= benoetigterKarton){
+                vorhandeneHolzeinheiten = vorhandeneHolzeinheiten - benoetigtesHolz;
+                vorhandeneSchrauben = vorhandeneSchrauben - benoetigteSchrauben;
+                vorhandeneFarbeinheiten = vorhandeneFarbeinheiten - benoetigteFarbe;
+                vorhandeneFarbeinheiten = vorhandeneFarbeinheiten - benoetigteFarbe;
+                vorhandeneKartoneinheiten = vorhandeneKartoneinheiten - benoetigterKarton;
+                materialVorhanden = true;
+            }else{
+                lagerAuffuellen();
+                materialVorhanden = false;
+            }     
+            return materialVorhanden;
     }
     /**
          * Getter-Methoden, um den aktuellen Lagerbestand abzurufen.

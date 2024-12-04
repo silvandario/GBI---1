@@ -4,7 +4,7 @@ import java.util.ArrayList;
  * Klasse Bestellung - repräsentiert eine Bestellung von Standard- und Premiumtüren.
  * 
  * @author Silvan Ladner
- * @version 2.2
+ * @version 3.2
  */
 public class Bestellung {
     
@@ -17,6 +17,7 @@ public class Bestellung {
     private int anzahlStandardTueren;
     private int anzahlPremiumTueren;
     private float lieferZeit; // wie lange dauert es, bis lieferung umdisponiert; Standartwert -1
+    private boolean alleProdukteProduziert; 
 
     /**
      * Konstruktor für Bestellung.
@@ -39,7 +40,6 @@ public class Bestellung {
         for (int i = 0; i < this.anzahlPremiumTueren; i++) {
             bestellteProdukte.add(new Premiumtuer());
         }
-
     }
     
     /**
@@ -180,4 +180,12 @@ public class Bestellung {
     public ArrayList<Produkt> gibBestellteProdukte() {
         return bestellteProdukte;
     }
+    /**
+     * Gibt Boolean an, ob alle produkte produziert sibd
+     */
+    public void setzeAlleProdukteProduziert(){
+        System.out.println("Update zur Bestellung mit Bestellnummer " + bestellungsNr + "Produkte sind versandberereit");
+        alleProdukteProduziert = true;
+    }
+        
 }
