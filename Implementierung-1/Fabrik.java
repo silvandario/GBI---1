@@ -106,8 +106,8 @@ public class Fabrik {
                 neueBestellung.setzeLieferZeit(lieferzeit); // nun wird die LIeferzeit offiziell gesetzt
                 neueBestellung.bestellungBestaetigen();
                 // Lagerbestand reduzieren: ANPASSUNGEN NOCH MÖGLICH GEMÄSS AUFGABE 3
-                bestellungen.add(bestellung);  
-                produktionsManager.fuegeZuVerarbeitendeBestellungenHinzu(bestellung);
+                bestellungen.add(neueBestellung);  
+                produktionsManager.fuegeZuVerarbeitendeBestellungenHinzu(neueBestellung);
                 System.out.println("Bestellung mit Bestellungsnummer " + bestellungsNr + " wurde erfolgreich aufgegeben.");
                 bestellungsNr++;
             } else {
