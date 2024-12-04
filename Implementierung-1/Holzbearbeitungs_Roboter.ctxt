@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.target=Holzbearbeitungs_Roboter
+comment0.text=\n\ Beschreiben\ Sie\ hier\ die\ Klasse\ Holzbearbeitungs_Roboter.\n\ \n\ @author\ Silvan\n\ @version\ 1\n\ \n\ *\ In\ \u00DCbungslektion\ bei\ Alex\:\ \ nur\ eine\ Variante\ ist\ notwendig,\ einfach\ zum\ zeigen,\ dass\ es\ funktioniert\n
+comment1.params=
+comment1.target=Holzbearbeitungs_Roboter()
+comment1.text=\n\ Konstruktor\ f\u00FCr\ Objekte\ der\ Klasse\ Holzbearbeitungs_Roboter\n
+comment2.params=y
+comment2.target=int\ beispielMethode(int)
+comment2.text=\n\ Ein\ Beispiel\ einer\ Methode\ -\ ersetzen\ Sie\ diesen\ Kommentar\ mit\ Ihrem\ eigenen\n\ \n\ @param\ \ y\ \ \ \ ein\ Beispielparameter\ f\u00FCr\ eine\ Methode\n\ @return\ \ \ \ \ \ \ \ die\ Summe\ aus\ x\ und\ y\n
+numComments=3
