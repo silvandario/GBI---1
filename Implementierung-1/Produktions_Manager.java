@@ -1,11 +1,24 @@
 import java.util.*;
 /**
- * Beschreiben Sie hier die Klasse Produktions_Manager.
+ * Die Klasse Produktions_Manager steuert die Produktionsprozesse in der Fabrik.
+ * Sie ist als Thread implementiert, um kontinuierlich eingehende Bestellungen
+ * zu bearbeiten und die Produkte den entsprechenden Robotern zuzuweisen.
+ *
+ * Die Klasse verwaltet:
+ * - Eine Warteschlange für neue Bestellungen
+ * - Eine Liste für Bestellungen, die sich in Produktion befinden
+ *
+ * Hauptaufgaben:
+ * - Bestellungen annehmen und Materialien aus dem Lager anfordern
+ * - Den Produktionsprozess starten und überwachen
+ * - Den Produktionsstatus von Bestellungen prüfen und abschließen
  * 
- * @author (Ihr Name) 
- * @version (eine Versionsnummer oder ein Datum)
+ * Die Klasse ist für die Koordination zwischen Lager, Robotern und Bestellungen verantwortlich.
+ * 
+ * @author (Gruppe 1) 
+ * @version (10.12.2024)
  */
-public class Produktions_Manager
+public class Produktions_Manager extends Thread
 {
     // Instanzvariablen - ersetzen Sie das folgende Beispiel mit Ihren Variablen
     private Holzbearbeitungs_Roboter holzRoboter;
@@ -33,78 +46,76 @@ public class Produktions_Manager
       this.lackierRoboter.start();
       this.verpackungsRoboter.start();
     }
-    /**
-     * Die run Methode des Threads nimmt die Bestellungen aus der Liste der zu 
-     * verarbeitenden Bestellungen. Wenn genügend Material im Lager ist, wird die 
-     * Produktion der Bestellten Produkte gestartet und die Bestellung wird
-     * der Liste betsellungenInProduktion hinzugefügt.
-     * 
-     * Bei den Bestellungen in Produktion wird dann geschaut, ob alle Produkte
-     * bereits produziert wurden. Wenn ja, wird die Bestellung von der Liste, der 
-     * zu produzierenden Bestellungen gelöscht und in der Klasse Bestellung wird
-     * festgehalten, dass alle Produkte produziert und zur Auslieferung bereit sind. 
-     */
     
+    /**
+     * Die run-Methode verarbeitet Bestellungen und überwacht den Produktionsstatus.
+     */
     public void run(){
         // synchronisiertesPrintln("Produktionsmanager gestartet");
-        while(true){ //unendliche Schlaufe
-            Bestellung naechsteBestellung = zuVerarbeitendeBestellungen.peek();
-            if(naechsteBestellung != null && meinLager.liefereMaterial(naechsteBestellung)){
-                naechsteBestellung = zuVerarbeitendeBestellungen.poll();
-                bestellungenInProduktion.add(naechsteBestellung);
-                starteProduktion(naechsteBestellung);
-            }
-            for(Bestellung bestellung : bestellungenInProduktion){
-            boolean alleProdukteProduziert = true;
-            for(Produkt produkt : bestellung.liefereBestellteProdukte()){
-                 if(produkt.getAktuellerZustand()!=3){
-                     alleProdukteProduziert = false;
-                     break;
+        while (true) {
+            synchronized (zuVerarbeitendeBestellungen) {
+                if (!zuVerarbeitendeBestellungen.isEmpty()) {
+                    Bestellung naechsteBestellung = zuVerarbeitendeBestellungen.poll();
+                    if (meinLager.liefereMaterial(naechsteBestellung)) {
+                        bestellungenInProduktion.add(naechsteBestellung);
+                        starteProduktion(naechsteBestellung);
+                    } else {
+                        System.out.println("Material nicht verfügbar für Bestellung: " + naechsteBestellung.gibBestellungsNr());
+                    }
                 }
-             }
-             if(alleProdukteProduziert){
-                 bestellungenInProduktion.remove(bestellung);
-                 bestellung.setzeAlleProdukteProduziert();
-             }             
-         }            
-         lasseThreadSchlafen(100);  
+            }
+
+            synchronized (bestellungenInProduktion) {
+                Iterator<Bestellung> iterator = bestellungenInProduktion.iterator();
+                while (iterator.hasNext()) {
+                    Bestellung bestellung = iterator.next();
+                    if (istProduktionAbgeschlossen(bestellung)) {
+                        iterator.remove();
+                        bestellung.setzeAlleProdukteProduziert();
+                        System.out.println("Produktion abgeschlossen: Bestellung " + bestellung.gibBestellungsNr());
+                    }
+                }
+            }
+
+            lasseThreadSchlafen(200);
         }
     }
     
     /**
-     * Lässt Thread schlafen, um die Bearbeitungszeit zu simulieren* 
-     * @param  zeit  Dauer, wie lange Thread schläft: Der Thread wird für 10 Minuten (600.000 Millisekunden) bei Standardtüren oder 
-     *  30 Minuten (1.800.000 Millisekunden) bei Premiumtüren schlafen gelegt
+     * Überprüft, ob alle Produkte einer Bestellung produziert wurden.
      */
-    private void lasseThreadSchlafen(int zeit) {
-      try {
-         Thread.sleep((long)zeit);
-      } catch (InterruptedException lasseSchlafenE) {
-         lasseSchlafenE.printStackTrace();
-      }
-    
+    private boolean istProduktionAbgeschlossen(Bestellung bestellung) {
+        for (Produkt produkt : bestellung.liefereBestellteProdukte()) {
+            if (produkt.getAktuellerZustand() != 3) { // Zustand 3 = fertig produziert
+                return false;
+            }
+        }
+        return true;
     }
    
-    private void starteProduktion(Bestellung bestellung){
-        // synchronisiertesPrintln("Produktionsmanager:  Produktion für Bestellung " + bestellung.gibBestellungsNr() " gestartet"); TODO Implementieren
-        for(Produkt produkt : bestellung.liefereBestellteProdukte()){
+    /**
+     * Startet die Produktion für eine Bestellung.
+     */
+    private void starteProduktion(Bestellung bestellung) {
+        System.out.println("Produktion gestartet: Bestellung " + bestellung.gibBestellungsNr());
+        for (Produkt produkt : bestellung.liefereBestellteProdukte()) {
             alloziereRoboter(produkt);
             produkt.naechsteProduktionsStation();
-        }         
+        }
     }
     
-    
-     /**
-     * An Liste zuVerarbeitendeBestellungen wird neue BEtsellung hinzugefügt
-     * 
-     * @param bestellung welche durch Schalf des Threads simuliert wird
-     */   
-    
-    public void fuegeZuVerarbeitendeBestellungenHinzu(Bestellung bestellung){
-        zuVerarbeitendeBestellungen.add(bestellung);
-    }
     /**
-     * Methode legt korrekte REiehenfolge fest
+     * Fügt eine neue Bestellung zur Warteschlange hinzu.
+     */   
+    public void fuegeZuVerarbeitendeBestellungenHinzu(Bestellung bestellung) {
+        synchronized (zuVerarbeitendeBestellungen) {
+            zuVerarbeitendeBestellungen.add(bestellung);
+            System.out.println("Neue Bestellung hinzugefügt: " + bestellung.gibBestellungsNr());
+        }
+    }
+    
+    /**
+     * Methode legt korrekte Reihenfolge der Roboter fest
      */
     private void alloziereRoboter(Produkt produkt){
         LinkedList<Roboter> bearbeitungsReihenfolge = new LinkedList<Roboter>();
@@ -123,5 +134,17 @@ public class Produktions_Manager
             produkt.setzteProduktionsAblauf(bearbeitungsReihenfolge);
 
         }        
+    }
+    
+    /**
+     * Lässt den Thread für eine bestimmte Zeit ruhen.
+     */
+    private void lasseThreadSchlafen(int zeit) {
+        try {
+            Thread.sleep(zeit);
+        } catch (InterruptedException lasseSchlafenE) {
+            Thread.currentThread().interrupt(); // Thread wieder auf interrupted setzen
+            System.out.println("Thread wurde unterbrochen: " + lasseSchlafenE.getMessage());
+        }
     }
 }
