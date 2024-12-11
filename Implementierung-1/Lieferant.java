@@ -51,4 +51,13 @@ public class Lieferant {
             return false;
         }
     }
-}
+  public void run(){
+        try{
+            Thread.sleep(2000);
+            System.out.println("Lieferant: Ware wird versandt"); 
+            lager.wareLiefern();
+        }catch(InterruptedException ie){
+            System.out.println("Lieferant: Thread Exception!");
+        }
+    }}
+    
