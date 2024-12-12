@@ -14,33 +14,26 @@ public class Lieferant extends Thread {
     }
 
     @Override
-    public void run() {
-        try {
-            while (isRunning) {
-                synchronized (lager) {
-                    while (!lager.isLeer() && isRunning) {
-                        System.out.println("Lieferant: Warten auf leeres Lager...");
-                        lager.wait(); // Warten, bis Lager leer ist oder Thread beendet wird
-                    }
-                }
-
-                if (!isRunning) {
-                    System.out.println("Lieferant: Beenden des Threads...");
-                    break; // Schleife verlassen
-                }
-
-                System.out.println("Lieferant: Lieferung gestartet...");
-                Thread.sleep(2000); // Simulierte Lieferzeit
-                synchronized (lager) {
-                    lager.wareLiefern();
-                    System.out.println("Lieferant: Lieferung abgeschlossen.");
+public void run() {
+    try {
+        while (isRunning) {
+            synchronized (lager) {
+                if (!lager.isLeer()) {
+                    lager.wait(); // Wait for stock to empty
+                    continue; // Skip rest of the iteration if the stock is not empty
                 }
             }
-        } catch (InterruptedException e) {
-            System.out.println("Lieferant: Thread unterbrochen!");
-            Thread.currentThread().interrupt(); // Setzt den Interrupt-Status zurück
+            System.out.println("Lieferant: Lieferung gestartet...");
+            Thread.sleep(2000); // Simulate delivery time
+            synchronized (lager) {
+                lager.lagerAuffuellen();
+                lager.notifyAll(); // Notify waiting threads
+            }
         }
+    } catch (InterruptedException e) {
+        System.out.println("Lieferant: Thread unterbrochen!");
     }
+}
 
     public void beenden() {
         System.out.println("Lieferant: Beenden angefordert...");

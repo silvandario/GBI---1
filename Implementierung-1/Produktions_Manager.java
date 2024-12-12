@@ -47,21 +47,27 @@ public class Produktions_Manager extends Thread {
         isRunning = false; // Stoppt die Schleife in `run()`
         interrupt(); // Unterbricht den Thread
         synchronisiertesPrintln("Produktionsmanager gestoppt.");
+
+        // Roboter stoppen
+        holzRoboter.beenden();
+        montageRoboter.beenden();
+        lackierRoboter.beenden();
+        verpackungsRoboter.beenden();
     }
 
     private void bearbeiteBestellungen() {
-        synchronized (zuVerarbeitendeBestellungen) {
-            if (!zuVerarbeitendeBestellungen.isEmpty()) {
-                Bestellung naechsteBestellung = zuVerarbeitendeBestellungen.poll();
-                if (meinLager.liefereMaterial(naechsteBestellung)) {
-                    bestellungenInProduktion.add(naechsteBestellung);
-                    starteProduktion(naechsteBestellung);
-                } else {
-                    synchronisiertesPrintln("Material nicht verfügbar für Bestellung: " + naechsteBestellung.gibBestellungsNr());
-                }
+    synchronized (zuVerarbeitendeBestellungen) {
+        if (!zuVerarbeitendeBestellungen.isEmpty()) {
+            Bestellung naechsteBestellung = zuVerarbeitendeBestellungen.poll();
+            if (meinLager.liefereMaterial(naechsteBestellung)) {
+                bestellungenInProduktion.add(naechsteBestellung);
+                starteProduktion(naechsteBestellung);
+            } else {
+                synchronisiertesPrintln("Material nicht verfügbar für Bestellung: " + naechsteBestellung.gibBestellungsNr());
             }
         }
     }
+}
 
     private void überprüfeProduktion() {
         synchronized (bestellungenInProduktion) {
@@ -86,12 +92,16 @@ public class Produktions_Manager extends Thread {
     }
 
     private void starteProduktion(Bestellung bestellung) {
-        synchronisiertesPrintln("Produktion gestartet: Bestellung " + bestellung.gibBestellungsNr());
-        for (Produkt produkt : bestellung.gibBestellteProdukte()) {
-            alloziereRoboter(produkt);
-            produkt.naechsteProduktionsStation();
-        }
+    if (bestellung == null || bestellung.gibBestellteProdukte().isEmpty()) {
+        synchronisiertesPrintln("Keine Produkte für Bestellung: " + (bestellung != null ? bestellung.gibBestellungsNr() : "Unbekannt"));
+        return;
     }
+    synchronisiertesPrintln("Produktion gestartet: Bestellung " + bestellung.gibBestellungsNr());
+    for (Produkt produkt : bestellung.gibBestellteProdukte()) {
+        alloziereRoboter(produkt);
+        produkt.naechsteProduktionsStation();
+    }
+}
 
     public void fuegeZuVerarbeitendeBestellungenHinzu(Bestellung bestellung) {
         synchronized (zuVerarbeitendeBestellungen) {
@@ -130,7 +140,7 @@ public class Produktions_Manager extends Thread {
         }
     }
 
-    private void synchronisiertesPrintln(String output) {
+    public void synchronisiertesPrintln(String output) {
         synchronized (System.out) {
             System.out.println(output);
         }

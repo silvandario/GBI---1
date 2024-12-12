@@ -4,17 +4,20 @@ import java.util.LinkedList;
  * Klasse Roboter - Simuliert die Bearbeitung von Produkten durch Roboter.
  * 
  * @author Silvan
- * @version 1.1
+ * @version 1.2
  */
 public class Roboter extends Thread {
     // Name des Roboters
-    private String name;
+    private final String name;
 
     // Warteschlange für zu bearbeitende Produkte
-    public LinkedList<Produkt> warteschlange = new LinkedList<>();
+    public final LinkedList<Produkt> warteschlange = new LinkedList<>();
 
     // Produktionszeit in Millisekunden
     private int produktionsZeit = 2000;
+
+    // Kontrollvariable für die Schleife
+    private volatile boolean isRunning = true;
 
     /**
      * Konstruktor
@@ -31,15 +34,33 @@ public class Roboter extends Thread {
      */
     @Override
     public void run() {
-        while (true) { // Endlosschleife, um kontinuierlich auf neue Produkte zu prüfen
-            if (warteschlange.peek() != null) { // Warteschlange prüfen
-                Produkt produkt = warteschlange.poll(); // Produkt aus der Warteschlange holen
-                synchronisiertesPrintln("Roboter " + name + ": nimmt " + produkt + " aus der Warteschlange.");
-                produziereProdukt(produkt);
-                produkt.naechsteProduktionsStation();
+        while (isRunning) {
+            try {
+                Produkt produkt;
+                synchronized (warteschlange) {
+                    produkt = warteschlange.poll();
+                }
+
+                if (produkt != null) {
+                    synchronisiertesPrintln("Roboter " + name + ": nimmt " + produkt + " aus der Warteschlange.");
+                    produziereProdukt(produkt);
+                    produkt.naechsteProduktionsStation();
+                }
+
+                lasseThreadSchlafen(1000); // Kurze Pause zwischen den Iterationen
+            } catch (Exception e) {
+                synchronisiertesPrintln("Roboter " + name + ": Fehler aufgetreten - " + e.getMessage());
             }
-            lasseThreadSchlafen(1000); // Kurze Pause zwischen den Iterationen
         }
+        synchronisiertesPrintln("Roboter " + name + " beendet.");
+    }
+
+    /**
+     * Beendet den Thread.
+     */
+    public void beenden() {
+        isRunning = false;
+        this.interrupt();
     }
 
     /**
@@ -48,8 +69,8 @@ public class Roboter extends Thread {
      * @param produkt Das Produkt, das bearbeitet wird
      */
     public void produziereProdukt(Produkt produkt) {
-        int zeit = produkt.getProduktionszeit();// Produktionszeit vom Produkt abrufen
-        lasseThreadSchlafen(zeit * 1); //mal 1000 für realen Case aber wirwolen nicht lange warten
+        int zeit = produkt.getProduktionszeit(); // Produktionszeit vom Produkt abrufen
+        lasseThreadSchlafen(zeit); // Zeit simulieren
         synchronisiertesPrintln("Roboter " + name + ": produziert " + produkt + ".");
         synchronisiertesPrintln("Roboter " + name + ": hat " + produkt + " fertig produziert.");
     }
@@ -60,8 +81,10 @@ public class Roboter extends Thread {
      * @param produkt Das Produkt, das hinzugefügt werden soll
      */
     public void fuegeProduktHinzu(Produkt produkt) {
+        synchronized (warteschlange) {
+            warteschlange.add(produkt);
+        }
         synchronisiertesPrintln("Roboter " + name + ": Produkt " + produkt + " zur Warteschlange hinzugefügt.");
-        warteschlange.add(produkt);
     }
 
     /**
@@ -92,6 +115,7 @@ public class Roboter extends Thread {
             Thread.sleep(zeit);
         } catch (InterruptedException e) {
             synchronisiertesPrintln("Roboter " + name + ": Schlaf wurde unterbrochen!");
+            Thread.currentThread().interrupt(); // Interrupt-Status wiederherstellen
         }
     }
 

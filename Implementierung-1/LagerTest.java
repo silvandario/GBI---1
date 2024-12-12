@@ -41,52 +41,40 @@ public class LagerTest {
     }
 
     @Test
-    public void testLagerBestandAusgeben() {
-        // Act
-        lager.lagerBestandAusgeben();
+public void testLagerBestandAusgeben() {
+    // Arrange
+    Lager lager = new Lager();
+    String expected = "-----------Lagerbestand-----------\n" +
+                      "1000 Holzeinheiten vorhanden\n" +
+                      "5000 Schrauben vorhanden\n" +
+                      "500 Farbeinheiten vorhanden\n" +
+                      "300 Kartoneinheiten vorhanden\n" +
+                      "200 Glaseinheiten vorhanden\n" +
+                      "----------- ----------- -----------";
 
-        // Konsolenausgabe normalisieren
-        String actualOutput = getTrimmedOutput().replaceAll("\\s+", " ").trim();
+    // Act
+    String actual = lager.gibLagerBestandAlsString();
 
-        // Erwartete Ausgabe
-        String expectedOutput = """
-            -----------Lagerbestand-----------
-            1000 Holzeinheiten vorhanden
-            5000 Schrauben vorhanden
-            500 Farbeinheiten vorhanden
-            300 Kartoneinheiten vorhanden
-            200 Glaseinheiten vorhanden
-            ----------- ----------- -----------
-            """.replaceAll("\\s+", " ").trim();
-
-        // Assert
-        assertEquals(expectedOutput, actualOutput, "Die Lagerbestandsausgabe stimmt nicht überein.");
-    }
+    // Assert
+    assertEquals(expected, actual, "Die Lagerbestandsausgabe stimmt nicht überein.");
+}
 
     @Test
 public void testVollesLagerAuffuellen() {
     // Arrange
-    Lager lager = new Lager();
-    lager.setVorhandeneHolzeinheiten(1000);
+    lager.setVorhandeneHolzeinheiten(1000); // Set full stock
     lager.setVorhandeneSchrauben(5000);
     lager.setVorhandeneFarbeinheiten(500);
     lager.setVorhandeneKartoneinheiten(300);
     lager.setVorhandeneGlaseinheiten(200);
 
-    // Redirect console output to capture the message
-    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-    PrintStream originalOut = System.out;
-    System.setOut(new PrintStream(outputStream));
-
     // Act
     lager.lagerAuffuellen();
 
-    // Reset console output
-    System.setOut(originalOut);
-
     // Assert
-    String actualOutput = outputStream.toString().trim();
-    assertEquals("Bestellung nicht getätigt! Das Lager ist voll", actualOutput, "Die Auffüllmeldung für ein volles Lager ist nicht korrekt.");
+    String output = getTrimmedOutput();
+    assertEquals("Bestellung nicht getätigt! Das Lager ist voll", output.trim(),
+                 "Die Auffüllmeldung für ein volles Lager ist nicht korrekt.");
 }
 
     @Test

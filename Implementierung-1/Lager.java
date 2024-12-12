@@ -25,14 +25,6 @@ public class Lager {
         lieferant.start(); // Lieferant-Thread starten
     }
 
-    public synchronized boolean isVoll() {
-        return vorhandeneHolzeinheiten == MAX_HOLZEINHEITEN &&
-               vorhandeneSchrauben == MAX_SCHRAUBEN &&
-               vorhandeneFarbeinheiten == MAX_FARBEINHEITEN &&
-               vorhandeneKartoneinheiten == MAX_KARTONEINHEITEN &&
-               vorhandeneGlaseinheiten == MAX_GLASEINHEITEN;
-    }
-
     public synchronized boolean isLeer() {
         return vorhandeneHolzeinheiten == 0 ||
                vorhandeneSchrauben == 0 ||
@@ -41,24 +33,28 @@ public class Lager {
                vorhandeneGlaseinheiten == 0;
     }
 
-    public void lagerAuffuellen() {
-        if (vorhandeneHolzeinheiten == MAX_HOLZEINHEITEN &&
-            vorhandeneSchrauben == MAX_SCHRAUBEN &&
-            vorhandeneFarbeinheiten == MAX_FARBEINHEITEN &&
-            vorhandeneKartoneinheiten == MAX_KARTONEINHEITEN &&
-            vorhandeneGlaseinheiten == MAX_GLASEINHEITEN) {
-            System.out.println("Bestellung nicht getätigt! Das Lager ist voll");
-            return;
-        }
-    
-        System.out.println("Lager wird aufgefüllt...");
-        vorhandeneHolzeinheiten = MAX_HOLZEINHEITEN;
-        vorhandeneSchrauben = MAX_SCHRAUBEN;
-        vorhandeneFarbeinheiten = MAX_FARBEINHEITEN;
-        vorhandeneKartoneinheiten = MAX_KARTONEINHEITEN;
-        vorhandeneGlaseinheiten = MAX_GLASEINHEITEN;
-        System.out.println("--- Lager erfolgreich aufgefüllt ---");
+    public synchronized void lagerAuffuellen() {
+    if (isVoll()) {
+        // Directly return the expected message without extra logs
+        System.out.println("Bestellung nicht getätigt! Das Lager ist voll");
+        return;
     }
+    System.out.println("Lager wird aufgefüllt...");
+    vorhandeneHolzeinheiten = MAX_HOLZEINHEITEN;
+    vorhandeneSchrauben = MAX_SCHRAUBEN;
+    vorhandeneFarbeinheiten = MAX_FARBEINHEITEN;
+    vorhandeneKartoneinheiten = MAX_KARTONEINHEITEN;
+    vorhandeneGlaseinheiten = MAX_GLASEINHEITEN;
+    System.out.println("--- Lager erfolgreich aufgefüllt ---");
+}
+
+public boolean isVoll() {
+    return vorhandeneHolzeinheiten == MAX_HOLZEINHEITEN &&
+           vorhandeneSchrauben == MAX_SCHRAUBEN &&
+           vorhandeneFarbeinheiten == MAX_FARBEINHEITEN &&
+           vorhandeneKartoneinheiten == MAX_KARTONEINHEITEN &&
+           vorhandeneGlaseinheiten == MAX_GLASEINHEITEN;
+}
     public synchronized void wareLiefern() {
         System.out.println("Lager: Ware wird geliefert...");
         vorhandeneHolzeinheiten = MAX_HOLZEINHEITEN;
@@ -93,14 +89,18 @@ public class Lager {
         }
     }
 
+        public String gibLagerBestandAlsString() {
+        return "-----------Lagerbestand-----------\n" +
+               vorhandeneHolzeinheiten + " Holzeinheiten vorhanden\n" +
+               vorhandeneSchrauben + " Schrauben vorhanden\n" +
+               vorhandeneFarbeinheiten + " Farbeinheiten vorhanden\n" +
+               vorhandeneKartoneinheiten + " Kartoneinheiten vorhanden\n" +
+               vorhandeneGlaseinheiten + " Glaseinheiten vorhanden\n" +
+               "----------- ----------- -----------";
+    }
+    
     public void lagerBestandAusgeben() {
-        System.out.println("-----------Lagerbestand-----------");
-        System.out.println(vorhandeneHolzeinheiten + " Holzeinheiten vorhanden");
-        System.out.println(vorhandeneSchrauben + " Schrauben vorhanden");
-        System.out.println(vorhandeneFarbeinheiten + " Farbeinheiten vorhanden");
-        System.out.println(vorhandeneKartoneinheiten + " Kartoneinheiten vorhanden");
-        System.out.println(vorhandeneGlaseinheiten + " Glaseinheiten vorhanden");
-        System.out.println("----------- ----------- -----------");
+        System.out.println(gibLagerBestandAlsString());
     }
      public int gibBeschaffungsZeit(Bestellung kundenBestellung) {
         int[] benoetigteRessourcen = berechneBenoetigteRessourcen(kundenBestellung);
@@ -112,13 +112,19 @@ public class Lager {
     }
 
     public boolean liefereMaterial(Bestellung kundenBestellung) {
-        int[] benoetigteRessourcen = berechneBenoetigteRessourcen(kundenBestellung);
-        if (sindMaterialienVorhanden(benoetigteRessourcen)) {
-            zieheMaterialAb(benoetigteRessourcen);
-            return true;
-        } else {
-            lagerAuffuellen();
-            return false;
+    int[] benoetigteRessourcen = berechneBenoetigteRessourcen(kundenBestellung);
+    if (sindMaterialienVorhanden(benoetigteRessourcen)) {
+        zieheMaterialAb(benoetigteRessourcen);
+        return true;
+    } else {
+        synchronisiertesPrintln("Materialmangel! Bestellung " + kundenBestellung.gibBestellungsNr() + " kann nicht bearbeitet werden.");
+        return false;
+    }
+
+}
+public void synchronisiertesPrintln(String output) {
+        synchronized (System.out) {
+            System.out.println(output);
         }
     }
 
