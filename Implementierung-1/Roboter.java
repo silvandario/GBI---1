@@ -48,8 +48,9 @@ public class Roboter extends Thread {
      * @param produkt Das Produkt, das bearbeitet wird
      */
     public void produziereProdukt(Produkt produkt) {
+        int zeit = produkt.getProduktionszeit();// Produktionszeit vom Produkt abrufen
+        lasseThreadSchlafen(zeit * 1); //mal 1000 für realen Case aber wirwolen nicht lange warten
         synchronisiertesPrintln("Roboter " + name + ": produziert " + produkt + ".");
-        lasseThreadSchlafen(produktionsZeit); // Thread schläft für die Produktionszeit
         synchronisiertesPrintln("Roboter " + name + ": hat " + produkt + " fertig produziert.");
     }
 

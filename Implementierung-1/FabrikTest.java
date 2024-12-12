@@ -17,20 +17,25 @@ public class FabrikTest {
     private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
 
+    private Premiumtuer premiumtuer;
+    private Standardtuer standardtuer;
+
     @BeforeEach
     public void setUp() {
         fabrik = new Fabrik();
-        System.setOut(new PrintStream(outputStream)); // Konsolenausgabe umleiten
+        premiumtuer = new Premiumtuer(); // Create instance for instance method calls
+        standardtuer = new Standardtuer();
+        System.setOut(new PrintStream(outputStream)); // Redirect console output
     }
 
     @AfterEach
     public void tearDown() {
-        System.setOut(originalOut); // Konsolenausgabe wiederherstellen
-        outputStream.reset(); // Stream leeren
+        System.setOut(originalOut); // Restore console output
+        outputStream.reset(); // Clear the stream
     }
 
     /**
-     * Hilfsmethode: Konsolenausgabe trimmen.
+     * Helper method: Trimmed console output.
      */
     private String getTrimmedOutput() {
         String output = outputStream.toString();
@@ -65,8 +70,9 @@ public class FabrikTest {
         Bestellung bestellung = fabrik.getBestellung().get(0);
         float actualLieferzeit = bestellung.gibLieferZeit();
 
+        // Use instance methods for Produktionszeit
         float expectedLieferzeit = 
-            (2 * Premiumtuer.getProduktionszeit() + 3 * Standardtuer.getProduktionszeit()) / (60 * 24) + 1;
+            (2 * premiumtuer.getProduktionszeit() + 3 * standardtuer.getProduktionszeit()) / (60 * 24) + 1;
 
         assertEquals(expectedLieferzeit, actualLieferzeit, 0.01, "Lieferzeit stimmt nicht überein.");
     }
@@ -88,11 +94,11 @@ public class FabrikTest {
         fabrik.bestellungAufgeben(2, 3); // 2 Premium-, 3 Standardtüren
         fabrik.lagerbestandVonFarbrik();
 
-        assertEquals(1000 - (2 * Premiumtuer.getHolzeinheiten() + 3 * Standardtuer.getHolzeinheiten()), fabrik.getVorhandeneHolzeinheiten());
-        assertEquals(5000 - (2 * Premiumtuer.getSchrauben() + 3 * Standardtuer.getSchrauben()), fabrik.getVorhandeneSchrauben());
-        assertEquals(500 - (2 * Premiumtuer.getFarbeinheiten() + 3 * Standardtuer.getFarbeinheiten()), fabrik.getVorhandeneFarbeinheiten());
-        assertEquals(300 - (2 * Premiumtuer.getKartoneinheiten() + 3 * Standardtuer.getKartoneinheiten()), fabrik.getVorhandeneKartoneinheiten());
-        assertEquals(200 - (2 * Premiumtuer.getGlaseinheiten()), fabrik.getVorhandeneGlaseinheiten());
+        assertEquals(1000 - (2 * premiumtuer.getHolzeinheiten() + 3 * standardtuer.getHolzeinheiten()), fabrik.getVorhandeneHolzeinheiten());
+        assertEquals(5000 - (2 * premiumtuer.getSchrauben() + 3 * standardtuer.getSchrauben()), fabrik.getVorhandeneSchrauben());
+        assertEquals(500 - (2 * premiumtuer.getFarbeinheiten() + 3 * standardtuer.getFarbeinheiten()), fabrik.getVorhandeneFarbeinheiten());
+        assertEquals(300 - (2 * premiumtuer.getKartoneinheiten() + 3 * standardtuer.getKartoneinheiten()), fabrik.getVorhandeneKartoneinheiten());
+        assertEquals(200 - (2 * premiumtuer.getGlaseinheiten()), fabrik.getVorhandeneGlaseinheiten());
     }
 
     @Test
@@ -101,27 +107,26 @@ public class FabrikTest {
         String actualOutput = getTrimmedOutput();
         assertTrue(actualOutput.contains("Bestellung nicht getätigt! Das Lager ist voll"));
     }
+
     @Test
-        void testNichtVollesLagerAuffuellen() {
-            fabrik.aktualisiereLagerBestand(10,10); // um Lager zu reduzueren
-            fabrik.lagerAuffuellenUndAusgeben();
-            String actualOutput = getTrimmedOutput();
-            assertTrue(actualOutput.contains("Lager erfolgreich aufgefüllt"));
-        }
+    void testNichtVollesLagerAuffuellen() {
+        fabrik.aktualisiereLagerBestand(10, 10); // Reduce inventory
+        fabrik.lagerAuffuellenUndAusgeben();
+        String actualOutput = getTrimmedOutput();
+        assertTrue(actualOutput.contains("Lager erfolgreich aufgefüllt"));
+    }
+
     @Test
     void testProduktionsManagerBearbeitung() throws InterruptedException {
         fabrik.bestellungAufgeben(1, 1); // Bestellung 1
         fabrik.bestellungAufgeben(2, 0); // Bestellung 2
 
-        Thread.sleep(3000); // Zeit für Produktionsmanager
+        Thread.sleep(3000); // Allow time for Produktionsmanager
 
         String actualOutput = getTrimmedOutput();
         assertTrue(actualOutput.contains("Neue Bestellung hinzugefügt: 1"));
         assertTrue(actualOutput.contains("Neue Bestellung hinzugefügt: 2"));
-    
     }
-
-    
 
     @Test
     void testInkrementelleBestellnummern() {
@@ -132,7 +137,7 @@ public class FabrikTest {
         String output = getTrimmedOutput();
         assertTrue(output.contains("Bestellungsnummer 1"));
         assertTrue(output.contains("Bestellungsnummer 2"));
-        }
+    }
 
     @Test
     void testLagerInteraktionNormalerGebrauch() {
@@ -149,10 +154,5 @@ public class FabrikTest {
         fabrik.lagerAuffuellenUndAusgeben();
         String actualOutput = getTrimmedOutput();
         assertTrue(actualOutput.contains("Das Lager ist voll"));
-        }
-
-    @Test
-    public void test()
-    {
     }
 }

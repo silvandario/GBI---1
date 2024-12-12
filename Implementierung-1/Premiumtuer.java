@@ -57,22 +57,24 @@ public class Premiumtuer extends Produkt {
     public static int getFarbeinheiten() {
         return FARBEINHEITEN;
     }
-
-    /**
-     * Gibt die Anzahl der Kartoneinheiten zurück.
-     * 
-     * @return Kartoneinheiten der Premiumtuer
-     */
-    public static int getKartoneinheiten() {
-        return KARTONEINHEITEN;
-    }
-
+    
     /**
      * Gibt die Produktionszeit zurück.
      * 
      * @return Produktionszeit der Premiumtuer
      */
-    public static int getProduktionszeit() {
+    @Override
+    public int getProduktionszeit() {
         return PRODUKTIONSZEIT;
     }
+
+    /**
+     * Gibt die KARTONEINHEITEN zurück.
+     * 
+     * @return KARTONEINHEITEN der Premiumtuer
+     */
+    public static int getKartoneinheiten() {
+        return KARTONEINHEITEN;
+    }
+ 
 }

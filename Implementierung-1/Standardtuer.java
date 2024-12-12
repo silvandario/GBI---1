@@ -63,7 +63,8 @@ public class Standardtuer extends Produkt {
      * 
      * @return Produktionszeit der Standardtuer
      */
-    public static int getProduktionszeit() {
+    @Override
+    public int getProduktionszeit() {
         return PRODUKTIONSZEIT;
     }
 }

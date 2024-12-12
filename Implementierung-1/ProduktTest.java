@@ -7,16 +7,13 @@ import org.junit.jupiter.api.Test;
  * Die Test-Klasse ProduktTest.
  *
  * Testet die Funktionalität der Klasse Produkt.
+ * Da Produkt abstrakt ist, wird Standardtuer als konkrete Implementierung verwendet.
  * 
- * @author  Silvan
- * @version 3.1
+ * @author Silvan
+ * @version 3.2
  */
 public class ProduktTest {
-    /**
-     * Konstruktor für die Test-Klasse ProduktTest.
-     */
-    public ProduktTest() {
-    }
+    private Produkt produkt;
 
     /**
      * Setzt das Testgerüst für den Test.
@@ -25,6 +22,8 @@ public class ProduktTest {
      */
     @BeforeEach
     public void setUp() {
+        // Standardtuer als konkrete Implementierung von Produkt
+        produkt = new Standardtuer();
     }
 
     /**
@@ -34,54 +33,43 @@ public class ProduktTest {
      */
     @AfterEach
     public void tearDown() {
+        produkt = null; // Objekt freigeben
     }
 
     @Test
     public void testInitialisierungZustand() {
-        // Arrange
-        Produkt produkt = new Produkt();
-
         // Act
         int result = produkt.aktuellerZustand();
 
         // Assert
         int expectedResult = 1; // Der initiale Zustand sollte 1 sein
-        assertEquals(expectedResult, result);
+        assertEquals(expectedResult, result, "Der initiale Zustand des Produkts sollte 1 sein.");
     }
 
     @Test
     public void testVeraendereZustandInnerhalbBereich() {
-        // Arrange
-        Produkt produkt = new Produkt();
-
         // Act
         produkt.zustandAendern(3); // Valider Zustand
         int result = produkt.aktuellerZustand();
 
         // Assert
         int expectedResult = 3; // Der Zustand sollte auf 3 geändert sein
-        assertEquals(expectedResult, result);
+        assertEquals(expectedResult, result, "Der Zustand des Produkts sollte auf 3 geändert werden.");
     }
 
     @Test
     public void testVeraendereZustandAusserhalbBereich() {
-        // Arrange
-        Produkt produkt = new Produkt();
-
         // Act
         produkt.zustandAendern(7); // Invalider Zustand
         int result = produkt.aktuellerZustand();
 
         // Assert
         int expectedResult = 5; // Fehlerzustand sollte gesetzt werden
-        assertEquals(expectedResult, result);
+        assertEquals(expectedResult, result, "Bei einem invaliden Zustand sollte der Fehlerzustand 5 gesetzt werden.");
     }
 
     @Test
     public void testFehlerhafterZustand() {
-        // Arrange
-        Produkt produkt = new Produkt();
-
         // Act
         produkt.zustandAendern(7); // Invalider Zustand
 

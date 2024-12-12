@@ -16,7 +16,7 @@ public class Lieferant extends Thread {
     public void run() {
     try {
         System.out.println("Lieferant: Lieferung gestartet...");
-        for (int i = 0; i < 20; i++) { // Simuliert längere Lieferung in kleinen Schritten
+        for (int i = 0; i < 48; i++) { // Simuliert längere Lieferung in kleinen Schritten. DIe Zeit ist bewusst ein 1000stel, da ich nicht so lange warten möchte für die Tests
             if (Thread.currentThread().isInterrupted()) {
                 System.out.println("Lieferant: Lieferung wurde unterbrochen!");
                 return; // Liefervorgang abbrechen

@@ -97,8 +97,8 @@ public class Fabrik {
      * Berechnet die Lieferzeit für eine Bestellung.
      */
     private float berechneLieferzeit(int standardTueren, int premiumTueren, int beschaffungsZeit) {
-        return (Standardtuer.getProduktionszeit() * standardTueren +
-                Premiumtuer.getProduktionszeit() * premiumTueren) / (60 * 24) + beschaffungsZeit + 1;
+        return (10 * standardTueren +
+                30 * premiumTueren) / (60 * 24) + beschaffungsZeit + 1;
     }
 
     /**

@@ -7,7 +7,7 @@ import java.util.LinkedList;
  * @author Silvan Ladner
  * @version 3.1
  */
-public class Produkt {
+public abstract class Produkt {
     /** Zustände des Produkts:
      * 1: bestellt
      * 2: in Produktion
@@ -17,6 +17,7 @@ public class Produkt {
      */
     private int zustand;
     private LinkedList<Roboter> produktionsAblauf;
+    int PRODUKTIONSZEIT;
 
     /**
      * Konstruktor: Initialisiert Zustand und Produktionsablauf.
@@ -24,7 +25,7 @@ public class Produkt {
     public Produkt() {
         this.zustand = 1; // Neu bestellt
         this.produktionsAblauf = new LinkedList<>();
-    }
+        }
 
     /**
      * Ändert den Zustand des Produkts.
@@ -45,9 +46,11 @@ public class Produkt {
      * @param produktionsAblauf Die Liste der Roboter in Bearbeitungsreihenfolge.
      */
     public void setzteProduktionsAblauf(LinkedList<Roboter> produktionsAblauf) {
-        this.produktionsAblauf = produktionsAblauf;
+    if (produktionsAblauf == null || produktionsAblauf.isEmpty()) {
+        throw new IllegalArgumentException("Produktionsablauf darf nicht leer sein.");
     }
-
+    this.produktionsAblauf = produktionsAblauf;
+    }
     /**
      * Leitet das Produkt zur nächsten Produktionsstation weiter.
      */
@@ -79,5 +82,15 @@ public class Produkt {
      */
     public boolean istFehlerhaft() {
         return this.zustand == 5;
+    }
+    
+   /**
+     * Abstrakte Methode zur Rückgabe der Produktionszeit.
+     * Diese Methode muss in den Subklassen implementiert werden.
+     * 
+     * @return Produktionszeit des Produkts.
+     */
+    public int getProduktionszeit() {
+        throw new UnsupportedOperationException("getProduktionszeit() muss in der Unterklasse überschrieben werden.");
     }
 }
