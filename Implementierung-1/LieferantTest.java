@@ -14,13 +14,17 @@ public class LieferantTest {
     public void testLieferungErfolgreich() throws InterruptedException {
         // Arrange
         Lager lager = new Lager();
+        lager.setVorhandeneHolzeinheiten(0); // Simuliere leeres Lager
         Lieferant lieferant = new Lieferant(lager);
-
+    
         // Act
         Thread lieferantThread = new Thread(lieferant);
         lieferantThread.start();
-        lieferantThread.join(); // Wartet, bis der Thread fertig ist
-
+    
+        Thread.sleep(3000); // Warte, bis die Lieferung abgeschlossen ist
+        lieferant.beenden(); // Beende den Lieferant-Thread
+        lieferantThread.join(); // Warte, bis der Thread beendet ist
+    
         // Assert
         assertEquals(1000, lager.getVorhandeneHolzeinheiten(), "Das Lager sollte vollständig aufgefüllt sein.");
         assertEquals(5000, lager.getVorhandeneSchrauben(), "Das Lager sollte vollständig aufgefüllt sein.");
@@ -28,39 +32,39 @@ public class LieferantTest {
         assertEquals(300, lager.getVorhandeneKartoneinheiten(), "Das Lager sollte vollständig aufgefüllt sein.");
         assertEquals(200, lager.getVorhandeneGlaseinheiten(), "Das Lager sollte vollständig aufgefüllt sein.");
     }
-
-    @Test
+        @Test
     public void testUnterbrechungDerLieferung() throws InterruptedException {
-    // Arrange
-    Lager lager = new Lager();
-    lager.setVorhandeneHolzeinheiten(500); // Initialbestand
-    Lieferant lieferant = new Lieferant(lager);
-    Thread lieferantThread = new Thread(lieferant);
-
-    // Act
-    lieferantThread.start();
-    Thread.sleep(300); // Warte, bis die Lieferung begonnen hat
-    lieferantThread.interrupt(); // Unterbreche den Lieferant-Thread
-    lieferantThread.join(); // Warte, bis der Thread beendet ist
-
-    // Assert
-    assertNotEquals(1000, lager.getVorhandeneHolzeinheiten(), "Das Lager sollte nicht vollständig aufgefüllt sein.");
-    }   
+        // Arrange
+        Lager lager = new Lager();
+        lager.setVorhandeneHolzeinheiten(500); // Teilweise aufgefülltes Lager
+        Lieferant lieferant = new Lieferant(lager);
+        Thread lieferantThread = new Thread(lieferant);
+    
+        // Act
+        lieferantThread.start();
+        Thread.sleep(300); // Warte, bis die Lieferung begonnen hat
+        lieferant.beenden(); // Beende den Lieferant-Thread
+        lieferantThread.join(); // Warte, bis der Thread beendet ist
+    
+        // Assert
+        assertEquals(500, lager.getVorhandeneHolzeinheiten(), "Das Lager sollte unverändert bleiben.");
+    }
 
     @Test
     public void testKeineMaterialänderungBeiUnterbrechung() throws InterruptedException {
         // Arrange
         Lager lager = new Lager();
+        lager.setVorhandeneHolzeinheiten(1000); // Voll aufgefülltes Lager
         Lieferant lieferant = new Lieferant(lager);
-
-        // Act
         Thread lieferantThread = new Thread(lieferant);
+    
+        // Act
         lieferantThread.start();
-        lieferantThread.interrupt(); // Unterbricht den Lieferant-Thread
-        lieferantThread.join(); // Wartet, bis der Thread beendet ist
-
+        Thread.sleep(1000); // Kurze Wartezeit
+        lieferant.beenden(); // Lieferant beenden
+        lieferantThread.join(); // Warte, bis der Thread beendet ist
+    
         // Assert
-        // Die Materialien sollten unverändert bleiben
         assertEquals(1000, lager.getVorhandeneHolzeinheiten(), "Die Holzeinheiten sollten unverändert bleiben.");
         assertEquals(5000, lager.getVorhandeneSchrauben(), "Die Schrauben sollten unverändert bleiben.");
         assertEquals(500, lager.getVorhandeneFarbeinheiten(), "Die Farbeinheiten sollten unverändert bleiben.");

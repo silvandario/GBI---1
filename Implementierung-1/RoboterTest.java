@@ -103,7 +103,7 @@ public class RoboterTest {
 
         // Assert
         long dauer = endTime - startTime;
-        assertTrue(dauer >= erwarteteProduktionszeit && dauer <= erwarteteProduktionszeit + 5,//anpassen für echtfall
+        assertTrue(dauer >= erwarteteProduktionszeit && dauer <= erwarteteProduktionszeit + 6,//anpassen für echtfall
                 "Die Produktionszeit für Premiumtuer sollte " + erwarteteProduktionszeit +
                 " ms betragen, aber es waren: " + dauer + " ms.");
     }

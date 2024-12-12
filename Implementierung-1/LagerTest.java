@@ -64,18 +64,30 @@ public class LagerTest {
     }
 
     @Test
-    public void testVollesLagerAuffuellen() {
-        // Arrange
-        lager = new Lager();
+public void testVollesLagerAuffuellen() {
+    // Arrange
+    Lager lager = new Lager();
+    lager.setVorhandeneHolzeinheiten(1000);
+    lager.setVorhandeneSchrauben(5000);
+    lager.setVorhandeneFarbeinheiten(500);
+    lager.setVorhandeneKartoneinheiten(300);
+    lager.setVorhandeneGlaseinheiten(200);
 
-        // Act
-        lager.lagerAuffuellen();
-        String actualOutput = getTrimmedOutput();
-        String expectedOutput = "Bestellung nicht getätigt! Das Lager ist voll";
+    // Redirect console output to capture the message
+    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    PrintStream originalOut = System.out;
+    System.setOut(new PrintStream(outputStream));
 
-        // Assert
-        assertEquals(expectedOutput, actualOutput, "Die Auffüllmeldung für ein volles Lager ist nicht korrekt.");
-    }
+    // Act
+    lager.lagerAuffuellen();
+
+    // Reset console output
+    System.setOut(originalOut);
+
+    // Assert
+    String actualOutput = outputStream.toString().trim();
+    assertEquals("Bestellung nicht getätigt! Das Lager ist voll", actualOutput, "Die Auffüllmeldung für ein volles Lager ist nicht korrekt.");
+}
 
     @Test
     public void testSetVorhandeneGlaseinheitenMitNegativemWert() {

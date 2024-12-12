@@ -21,10 +21,88 @@ public class Lager {
         vorhandeneFarbeinheiten = MAX_FARBEINHEITEN;
         vorhandeneKartoneinheiten = MAX_KARTONEINHEITEN;
         vorhandeneGlaseinheiten = MAX_GLASEINHEITEN;
-        lieferant = null;
+        lieferant = new Lieferant(this); // Lieferant initialisieren
+        lieferant.start(); // Lieferant-Thread starten
     }
 
-    public int gibBeschaffungsZeit(Bestellung kundenBestellung) {
+    public synchronized boolean isVoll() {
+        return vorhandeneHolzeinheiten == MAX_HOLZEINHEITEN &&
+               vorhandeneSchrauben == MAX_SCHRAUBEN &&
+               vorhandeneFarbeinheiten == MAX_FARBEINHEITEN &&
+               vorhandeneKartoneinheiten == MAX_KARTONEINHEITEN &&
+               vorhandeneGlaseinheiten == MAX_GLASEINHEITEN;
+    }
+
+    public synchronized boolean isLeer() {
+        return vorhandeneHolzeinheiten == 0 ||
+               vorhandeneSchrauben == 0 ||
+               vorhandeneFarbeinheiten == 0 ||
+               vorhandeneKartoneinheiten == 0 ||
+               vorhandeneGlaseinheiten == 0;
+    }
+
+    public void lagerAuffuellen() {
+        if (vorhandeneHolzeinheiten == MAX_HOLZEINHEITEN &&
+            vorhandeneSchrauben == MAX_SCHRAUBEN &&
+            vorhandeneFarbeinheiten == MAX_FARBEINHEITEN &&
+            vorhandeneKartoneinheiten == MAX_KARTONEINHEITEN &&
+            vorhandeneGlaseinheiten == MAX_GLASEINHEITEN) {
+            System.out.println("Bestellung nicht getätigt! Das Lager ist voll");
+            return;
+        }
+    
+        System.out.println("Lager wird aufgefüllt...");
+        vorhandeneHolzeinheiten = MAX_HOLZEINHEITEN;
+        vorhandeneSchrauben = MAX_SCHRAUBEN;
+        vorhandeneFarbeinheiten = MAX_FARBEINHEITEN;
+        vorhandeneKartoneinheiten = MAX_KARTONEINHEITEN;
+        vorhandeneGlaseinheiten = MAX_GLASEINHEITEN;
+        System.out.println("--- Lager erfolgreich aufgefüllt ---");
+    }
+    public synchronized void wareLiefern() {
+        System.out.println("Lager: Ware wird geliefert...");
+        vorhandeneHolzeinheiten = MAX_HOLZEINHEITEN;
+        vorhandeneSchrauben = MAX_SCHRAUBEN;
+        vorhandeneFarbeinheiten = MAX_FARBEINHEITEN;
+        vorhandeneKartoneinheiten = MAX_KARTONEINHEITEN;
+        vorhandeneGlaseinheiten = MAX_GLASEINHEITEN;
+        System.out.println("Lager: Auffüllung abgeschlossen!");
+        lagerBestandAusgeben();
+    }
+
+    public synchronized void verbraucheMaterial(int holz, int schrauben, int farbe, int karton, int glas) {
+        if (vorhandeneHolzeinheiten >= holz &&
+            vorhandeneSchrauben >= schrauben &&
+            vorhandeneFarbeinheiten >= farbe &&
+            vorhandeneKartoneinheiten >= karton &&
+            vorhandeneGlaseinheiten >= glas) {
+
+            vorhandeneHolzeinheiten -= holz;
+            vorhandeneSchrauben -= schrauben;
+            vorhandeneFarbeinheiten -= farbe;
+            vorhandeneKartoneinheiten -= karton;
+            vorhandeneGlaseinheiten -= glas;
+
+            System.out.println("Lager: Materialien erfolgreich verbraucht.");
+            if (isLeer()) {
+                System.out.println("Lager: Materialien niedrig, Auffüllung erforderlich.");
+                lagerAuffuellen();
+            }
+        } else {
+            System.out.println("Lager: Nicht genügend Materialien verfügbar!");
+        }
+    }
+
+    public void lagerBestandAusgeben() {
+        System.out.println("-----------Lagerbestand-----------");
+        System.out.println(vorhandeneHolzeinheiten + " Holzeinheiten vorhanden");
+        System.out.println(vorhandeneSchrauben + " Schrauben vorhanden");
+        System.out.println(vorhandeneFarbeinheiten + " Farbeinheiten vorhanden");
+        System.out.println(vorhandeneKartoneinheiten + " Kartoneinheiten vorhanden");
+        System.out.println(vorhandeneGlaseinheiten + " Glaseinheiten vorhanden");
+        System.out.println("----------- ----------- -----------");
+    }
+     public int gibBeschaffungsZeit(Bestellung kundenBestellung) {
         int[] benoetigteRessourcen = berechneBenoetigteRessourcen(kundenBestellung);
         if (sindMaterialienVorhanden(benoetigteRessourcen)) {
             return 0;
@@ -44,34 +122,6 @@ public class Lager {
         }
     }
 
-    public void lagerAuffuellen() {
-    if (vorhandeneHolzeinheiten == MAX_HOLZEINHEITEN &&
-        vorhandeneSchrauben == MAX_SCHRAUBEN &&
-        vorhandeneFarbeinheiten == MAX_FARBEINHEITEN &&
-        vorhandeneKartoneinheiten == MAX_KARTONEINHEITEN &&
-        vorhandeneGlaseinheiten == MAX_GLASEINHEITEN) {
-        System.out.println("Bestellung nicht getätigt! Das Lager ist voll");
-        return;
-    }
-    
-    System.out.println("Lager wird aufgefüllt...");
-    vorhandeneHolzeinheiten = MAX_HOLZEINHEITEN;
-    vorhandeneSchrauben = MAX_SCHRAUBEN;
-    vorhandeneFarbeinheiten = MAX_FARBEINHEITEN;
-    vorhandeneKartoneinheiten = MAX_KARTONEINHEITEN;
-    vorhandeneGlaseinheiten = MAX_GLASEINHEITEN;
-    System.out.println("--- Lager erfolgreich aufgefüllt ---");
-    }
-
-    public void lagerBestandAusgeben() {
-        System.out.println("-----------Lagerbestand-----------");
-        System.out.println(vorhandeneHolzeinheiten + " Holzeinheiten vorhanden");
-        System.out.println(vorhandeneSchrauben + " Schrauben vorhanden");
-        System.out.println(vorhandeneFarbeinheiten + " Farbeinheiten vorhanden");
-        System.out.println(vorhandeneKartoneinheiten + " Kartoneinheiten vorhanden");
-        System.out.println(vorhandeneGlaseinheiten + " Glaseinheiten vorhanden");
-        System.out.println("----------- ----------- -----------");
-    }
  
 
     private int[] berechneBenoetigteRessourcen(Bestellung kundenBestellung) {
@@ -109,15 +159,6 @@ public class Lager {
         vorhandeneGlaseinheiten -= benoetigteRessourcen[4];
     }
     
-    public void wareLiefern(){
-        vorhandeneHolzeinheiten=MAX_HOLZEINHEITEN;
-        vorhandeneSchrauben=MAX_SCHRAUBEN;
-        vorhandeneFarbeinheiten=MAX_FARBEINHEITEN;
-        vorhandeneKartoneinheiten=MAX_KARTONEINHEITEN;
-        vorhandeneGlaseinheiten=MAX_GLASEINHEITEN;
-        System.out.println("Lager: Ware wurde geliefert! ");   
-        lagerBestandAusgeben();
-    }
 
     // Getter-Methoden
     public int getVorhandeneHolzeinheiten() {

@@ -3,10 +3,11 @@
  * und steuert die Lieferung von Materialien ins Lager.
  * 
  * @author Silvan
- * @version 1.1
+ * @version 1.2
  */
 public class Lieferant extends Thread {
     private Lager lager;
+    private volatile boolean isRunning = true;
 
     public Lieferant(Lager lager) {
         this.lager = lager;
@@ -14,20 +15,39 @@ public class Lieferant extends Thread {
 
     @Override
     public void run() {
-    try {
-        System.out.println("Lieferant: Lieferung gestartet...");
-        for (int i = 0; i < 48; i++) { // Simuliert längere Lieferung in kleinen Schritten. DIe Zeit ist bewusst ein 1000stel, da ich nicht so lange warten möchte für die Tests
-            if (Thread.currentThread().isInterrupted()) {
-                System.out.println("Lieferant: Lieferung wurde unterbrochen!");
-                return; // Liefervorgang abbrechen
+        try {
+            while (isRunning) {
+                synchronized (lager) {
+                    while (!lager.isLeer() && isRunning) {
+                        System.out.println("Lieferant: Warten auf leeres Lager...");
+                        lager.wait(); // Warten, bis Lager leer ist oder Thread beendet wird
+                    }
+                }
+
+                if (!isRunning) {
+                    System.out.println("Lieferant: Beenden des Threads...");
+                    break; // Schleife verlassen
+                }
+
+                System.out.println("Lieferant: Lieferung gestartet...");
+                Thread.sleep(2000); // Simulierte Lieferzeit
+                synchronized (lager) {
+                    lager.wareLiefern();
+                    System.out.println("Lieferant: Lieferung abgeschlossen.");
+                }
             }
-            Thread.sleep(100); // Simuliere eine kleine Wartezeit pro Schritt
+        } catch (InterruptedException e) {
+            System.out.println("Lieferant: Thread unterbrochen!");
+            Thread.currentThread().interrupt(); // Setzt den Interrupt-Status zurück
         }
-        System.out.println("Lieferant: Lieferung abgeschlossen!");
-        lager.wareLiefern();
-    } catch (InterruptedException e) {
-        System.out.println("Lieferant: Lieferung durch Exception unterbrochen!");
-        Thread.currentThread().interrupt(); // Interrupt-Flag wieder setzen
     }
-    }       
+
+    public void beenden() {
+        System.out.println("Lieferant: Beenden angefordert...");
+        isRunning = false; // Zustand auf nicht mehr laufend setzen
+        synchronized (lager) {
+            lager.notifyAll(); // Sicherstellen, dass `wait` beendet wird
+        }
+        this.interrupt(); // Thread unterbrechen
+    }
 }
