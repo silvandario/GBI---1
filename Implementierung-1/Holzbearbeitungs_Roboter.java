@@ -33,12 +33,12 @@ public class Holzbearbeitungs_Roboter extends Roboter {
             }
 
             // Verarbeitung simulieren
-            System.out.println(getName() + " beginnt mit der Bearbeitung von: " + produkt.getName());
+            System.out.println(gibName() + " beginnt mit der Bearbeitung von: " + produkt.aktuellerZustand());
             Thread.sleep(verarbeitungsZeit);
-            System.out.println(getName() + " hat die Bearbeitung abgeschlossen: " + produkt.getName());
+            System.out.println(gibName() + " hat die Bearbeitung abgeschlossen: " + produkt.aktuellerZustand());
 
             // Produkt als bereit für den nächsten Schritt markieren
-            produkt.markiereBereitFuerNaechsteStation();
+            produkt.naechsteProduktionsStation();
         } catch (InterruptedException e) {
             System.out.println("Die Bearbeitung wurde unterbrochen: " + e.getMessage());
         }

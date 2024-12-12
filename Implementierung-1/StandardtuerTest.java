@@ -46,7 +46,7 @@ public class StandardtuerTest
         //Arrange
         Standardtuer standardtuer = new Standardtuer();
         //Act
-        int result = standardtuer.getAktuellerZustand();
+        int result = standardtuer.aktuellerZustand();
         
         //Assert
         int expectedResult = 1; // Initialwert vom Zustand wurde auff 1 gesetzt

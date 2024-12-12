@@ -46,7 +46,7 @@ public class PremiumtuerTest
         //Arrange
         Premiumtuer premiumtuer = new Premiumtuer();
         //Act
-        int result = premiumtuer.getAktuellerZustand();
+        int result = premiumtuer.aktuellerZustand();
         
         //Assert
         int expectedResult = 1; // Initialwert vom Zustand wurde auff 1 gesetzt

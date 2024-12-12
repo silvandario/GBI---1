@@ -8,79 +8,76 @@ import java.util.LinkedList;
  * @version 3.1
  */
 public class Produkt {
-    /**Die variabel zustand korrespondiert mit dem Zustand (als ganzzahlige numerische Kodierung) des betsellten Produktes
-     * Zustände (zur Zeit noch arbiträr, da auch von späterer Implementation abhängig):
-     * 1: betsellt
+    /** Zustände des Produkts:
+     * 1: bestellt
      * 2: in Produktion
-     * 3: fertig gestellt & im Lager
+     * 3: fertiggestellt & im Lager
      * 4: verkauft & abtransportiert
-     * 5: Achtung! Hier ist was Falsch
+     * 5: Fehlerzustand
      */
     private int zustand;
     private LinkedList<Roboter> produktionsAblauf;
-    private LinkedList<Produkt> warteschlange = new LinkedList<Produkt>();
-    
+
     /**
-     * no-args-Konstruktor
+     * Konstruktor: Initialisiert Zustand und Produktionsablauf.
      */
     public Produkt() {
-        zustand = 1; // 1, da neu
-        produktionsAblauf = new LinkedList<Roboter>();
+        this.zustand = 1; // Neu bestellt
+        this.produktionsAblauf = new LinkedList<>();
     }
 
     /**
      * Ändert den Zustand des Produkts.
      * 
-     * @param neuerZustand der neue Zustand des Produkts
+     * @param neuerZustand Der neue Zustand des Produkts.
      */
     public void zustandAendern(int neuerZustand) {
-        if (neuerZustand >= 0 && neuerZustand < 5) {
-        this.zustand = neuerZustand;
+        if (neuerZustand >= 1 && neuerZustand <= 4) {
+            this.zustand = neuerZustand;
         } else {
-        this.zustand = 5;
+            this.zustand = 5; // Fehlerzustand
         }
     }
-    
+
     /**
-     * Hier wird für das Produkt festgelegt, in welcher Reihenfolge es von
-     * den Robotern bearbeitet wird
+     * Legt die Reihenfolge der Roboter fest, die das Produkt bearbeiten.
      * 
-     * @param produktionsAblauf LinkedList<Roboter> die List mit der Reihenfolge der zu druchlaufenden Roboter
+     * @param produktionsAblauf Die Liste der Roboter in Bearbeitungsreihenfolge.
      */
-    
-    public void setzteProduktionsAblauf(LinkedList<Roboter> produktionsAblauf){
+    public void setzteProduktionsAblauf(LinkedList<Roboter> produktionsAblauf) {
         this.produktionsAblauf = produktionsAblauf;
     }
-    
-     /**
-     * Nach Bearbeitung durch Roboter kommt Produkt zur nächsten Station bzw Roboter, spirch:
-     * Ändert den aktuellen Zustand des Produkts. Der Zustand ist bei Initialiserung 1 und wird entsprechend Beschreib oben auf 2 bzw. 3 geändert
-     */   
-    
-    
-    public void naechsteProduktionsStation(){
-        if(produktionsAblauf.peek() != null){  //Check, dass nicht "Nichts" ist
-            Roboter roboter = produktionsAblauf.poll(); // nächstes Eleemtn wird mitgenommen (wie in Übung)
-            System.out.println("Next Station:" + roboter.gibName()); // gibt Station, die folgt, aus
-            zustandAendern(2);
+
+    /**
+     * Leitet das Produkt zur nächsten Produktionsstation weiter.
+     */
+    public void naechsteProduktionsStation() {
+        if (!produktionsAblauf.isEmpty()) { // Überprüfung, ob weitere Stationen vorhanden sind
+            Roboter roboter = produktionsAblauf.poll();
+            System.out.println("Nächste Station: " + roboter.gibName());
+            zustandAendern(2); // In Produktion
             roboter.fuegeProduktHinzu(this);
-        }
-        else{
-            System.out.println("Folgendes Produkt ist bereit zur Auslieferung: "+ this);
-            zustandAendern(3);
+        } else {
+            System.out.println("Produkt bereit zur Auslieferung: " + this);
+            zustandAendern(3); // Fertiggestellt & im Lager
         }
     }
 
     /**
      * Gibt den aktuellen Zustand des Produkts zurück.
      * 
-     * @return aktueller Zustand des Produkts
+     * @return Aktueller Zustand des Produkts.
      */
-    public int getAktuellerZustand() {
+    public int aktuellerZustand() {
         return this.zustand;
     }
-    
-    
-    
-}
 
+    /**
+     * Überprüft, ob das Produkt im Fehlerzustand ist.
+     * 
+     * @return True, wenn das Produkt im Fehlerzustand ist, sonst false.
+     */
+    public boolean istFehlerhaft() {
+        return this.zustand == 5;
+    }
+}

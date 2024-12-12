@@ -3,20 +3,20 @@ import java.util.ArrayList;
 /**
  * Klasse Bestellung - repräsentiert eine Bestellung von Standard- und Premiumtüren.
  * 
- * @author Silvan Ladner
- * @version 3.2
+ * @author Silvan
+ * @version 3.3
  */
 public class Bestellung {
     
     private static final int MAX_TEILE_PRO_TYP = 10_000; // Maximale Anzahl von Teilen pro Typ
 
-    private ArrayList<Produkt> bestellteProdukte = new ArrayList<>(); 
-    private boolean bestellBestaetigung = false; 
-    private int bestellungsNr=1;
+    private ArrayList<Produkt> bestellteProdukte; 
+    private boolean bestellBestaetigung; 
+    private int bestellungsNr;
     private int beschaffungsZeit; // Standardwert -1
     private int anzahlStandardTueren;
     private int anzahlPremiumTueren;
-    private float lieferZeit; // wie lange dauert es, bis lieferung umdisponiert; Standartwert -1
+    private float lieferZeit; // Standardwert -1
     private boolean alleProdukteProduziert; 
 
     /**
@@ -31,13 +31,17 @@ public class Bestellung {
         this.anzahlStandardTueren = validiereEingabe(anzahlStandardTueren, "Standardtüren");
         this.anzahlPremiumTueren = validiereEingabe(anzahlPremiumTueren, "Premiumtüren");
         this.bestellungsNr = bestellungsNr;
-        lieferZeit = -1;
-        beschaffungsZeit = -1;    
-        // Initialisiert die Liste der bestellten Produkte basierend auf den Eingabewerten
-        for (int i = 0; i < this.anzahlStandardTueren; i++) {
+        this.beschaffungsZeit = -1;
+        this.lieferZeit = -1;
+        this.bestellBestaetigung = false;
+        this.alleProdukteProduziert = false;
+        this.bestellteProdukte = new ArrayList<>();
+        
+        // Initialisiert die Liste der bestellten Produkte
+        for (int i = 0; i < anzahlStandardTueren; i++) {
             bestellteProdukte.add(new Standardtuer());
         }
-        for (int i = 0; i < this.anzahlPremiumTueren; i++) {
+        for (int i = 0; i < anzahlPremiumTueren; i++) {
             bestellteProdukte.add(new Premiumtuer());
         }
     }
@@ -61,40 +65,40 @@ public class Bestellung {
     }
 
     /**
-     * Fügt eine Standardtür der Bestellung hinzu, wenn die Maximalgrenze nicht überschritten wird.
+     * Fügt eine Standardtür der Bestellung hinzu.
      * 
      * @throws IllegalStateException bei Überschreitung der Maximalgrenze
      */
     public void standardTuereHinzufuegen() {
         if (anzahlStandardTueren >= MAX_TEILE_PRO_TYP) {
-            throw new IllegalStateException("Maximale Anzahl von Standardtüren erreicht. Keine weiteren können hinzugefügt werden.");
+            throw new IllegalStateException("Maximale Anzahl von Standardtüren erreicht.");
         }
         bestellteProdukte.add(new Standardtuer());
         anzahlStandardTueren++;
     }
     
     /**
-     * Fügt eine Premiumtür der Bestellung hinzu, wenn die Maximalgrenze nicht überschritten wird.
+     * Fügt eine Premiumtür der Bestellung hinzu.
      * 
      * @throws IllegalStateException bei Überschreitung der Maximalgrenze
      */
     public void premiumTuereHinzufuegen() {
         if (anzahlPremiumTueren >= MAX_TEILE_PRO_TYP) {
-            throw new IllegalStateException("Maximale Anzahl von Premiumtüren erreicht. Keine weiteren können hinzugefügt werden.");
+            throw new IllegalStateException("Maximale Anzahl von Premiumtüren erreicht.");
         }
         bestellteProdukte.add(new Premiumtuer());
         anzahlPremiumTueren++;
     }
+
     /**
-     * EMthode liefert Liste mit bestellten Produkten 
+     * Gibt die Liste der bestellten Produkte zurück.
      * 
-     * @return Liste mit den bestellten Produkten
-     */      
-    public ArrayList<Produkt> liefereBestellteProdukte()
-    {
-        
-        return bestellteProdukte;         
+     * @return Liste der bestellten Produkte
+     */
+    public ArrayList<Produkt> gibBestellteProdukte() {
+        return bestellteProdukte;
     }
+
     /**
      * Bestätigt die Bestellung.
      */
@@ -128,9 +132,11 @@ public class Bestellung {
     public int gibBeschaffungsZeit() {
         return beschaffungsZeit;
     }
+
     /**
-     * Setzt die Lieferzeit der Bestellungwird übergeben und gesetzt* 
-     * @param zeit Beschaffungszeit (in Tagen)
+     * Setzt die Lieferzeit der Bestellung.
+     * 
+     * @param lieferZeit Lieferzeit (in Tagen)
      */
     public void setzeLieferZeit(float lieferZeit) {
         this.lieferZeit = lieferZeit;
@@ -139,7 +145,7 @@ public class Bestellung {
     /**
      * Gibt die Lieferzeit der Bestellung zurück.
      * 
-     * @return Beschaffungszeit in Tagen
+     * @return Lieferzeit in Tagen
      */
     public float gibLieferZeit() {
         return lieferZeit;
@@ -173,19 +179,10 @@ public class Bestellung {
     }
 
     /**
-     * Gibt die Liste der bestellten Produkte zurück.
-     * 
-     * @return Liste der bestellten Produkte
+     * Markiert die Bestellung als vollständig produziert.
      */
-    public ArrayList<Produkt> gibBestellteProdukte() {
-        return bestellteProdukte;
-    }
-    /**
-     * Gibt Boolean an, ob alle produkte produziert sibd
-     */
-    public void setzeAlleProdukteProduziert(){
-        System.out.println("Update zur Bestellung mit Bestellnummer " + bestellungsNr + "Produkte sind versandberereit");
+    public void setzeAlleProdukteProduziert() {
+        System.out.println("Bestellung " + bestellungsNr + ": Alle Produkte sind produziert und bereit zum Versand.");
         alleProdukteProduziert = true;
     }
-        
 }

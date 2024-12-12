@@ -138,7 +138,7 @@ public class BestellungTest {
     @Test
     public void testLiefereBestellteProdukte() {
         Bestellung bestellung = new Bestellung(5, 3, 1);
-        ArrayList<Produkt> produkte = bestellung.liefereBestellteProdukte();
+        ArrayList<Produkt> produkte = bestellung.gibBestellteProdukte();
         // Assert
         assertEquals(8, produkte.size());
     }

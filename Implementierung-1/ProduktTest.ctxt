@@ -1,12 +1,12 @@
 #BlueJ class context
 comment0.target=ProduktTest
-comment0.text=\n\ Die\ Test-Klasse\ ProduktTest.\n\n\ @author\ \ (Ihr\ Name)\n\ @version\ (eine\ Versionsnummer\ oder\ ein\ Datum)\n
+comment0.text=\n\ Die\ Test-Klasse\ ProduktTest.\n\n\ Testet\ die\ Funktionalit\u00E4t\ der\ Klasse\ Produkt.\n\ \n\ @author\ \ Silvan\n\ @version\ 3.1\n
 comment1.params=
 comment1.target=ProduktTest()
-comment1.text=\n\ Konstruktor\ fuer\ die\ Test-Klasse\ ProduktTest\n
+comment1.text=\n\ Konstruktor\ f\u00FCr\ die\ Test-Klasse\ ProduktTest.\n
 comment2.params=
 comment2.target=void\ setUp()
-comment2.text=\n\ \ Setzt\ das\ Testger\u00FCst\ fuer\ den\ Test.\n\n\ Wird\ vor\ jeder\ Testfall-Methode\ aufgerufen.\n
+comment2.text=\n\ Setzt\ das\ Testger\u00FCst\ f\u00FCr\ den\ Test.\n\n\ Wird\ vor\ jeder\ Testfall-Methode\ aufgerufen.\n
 comment3.params=
 comment3.target=void\ tearDown()
 comment3.text=\n\ Gibt\ das\ Testger\u00FCst\ wieder\ frei.\n\n\ Wird\ nach\ jeder\ Testfall-Methode\ aufgerufen.\n
@@ -16,4 +16,6 @@ comment5.params=
 comment5.target=void\ testVeraendereZustandInnerhalbBereich()
 comment6.params=
 comment6.target=void\ testVeraendereZustandAusserhalbBereich()
-numComments=7
+comment7.params=
+comment7.target=void\ testFehlerhafterZustand()
+numComments=8

@@ -1,10 +1,16 @@
 #BlueJ class context
 comment0.target=Holzbearbeitungs_Roboter
-comment0.text=\n\ Beschreiben\ Sie\ hier\ die\ Klasse\ Holzbearbeitungs_Roboter.\n\ \n\ @author\ Silvan\n\ @version\ 1\n\ \n\ *\ In\ \u00DCbungslektion\ bei\ Alex\:\ \ nur\ eine\ Variante\ ist\ notwendig,\ einfach\ zum\ zeigen,\ dass\ es\ funktioniert\n
+comment0.text=\n\ Implementierung\ der\ Klasse\ Holzbearbeitungs_Roboter.\n\ Diese\ Klasse\ erweitert\ Roboter\ und\ simuliert\ die\ Holzbearbeitung\ von\ Produkten.\n
 comment1.params=name
 comment1.target=Holzbearbeitungs_Roboter(java.lang.String)
-comment1.text=\n\ Konstruktor\ f\u00FCr\ Objekte\ der\ Klasse\ Holzbearbeitungs_Roboter\n
-comment2.params=y
-comment2.target=int\ beispielMethode(int)
-comment2.text=\n\ Ein\ Beispiel\ einer\ Methode\ -\ ersetzen\ Sie\ diesen\ Kommentar\ mit\ Ihrem\ eigenen\n\ \n\ @param\ \ y\ \ \ \ ein\ Beispielparameter\ f\u00FCr\ eine\ Methode\n\ @return\ \ \ \ \ \ \ \ die\ Summe\ aus\ x\ und\ y\n
-numComments=3
+comment1.text=\n\ Konstruktor\ f\u00FCr\ Holzbearbeitungs_Roboter.\n\n\ @param\ name\ Der\ Name\ des\ Roboters.\n
+comment2.params=produkt
+comment2.target=void\ produziereProdukt(Produkt)
+comment2.text=\n\ Simuliert\ den\ Produktionsprozess\ f\u00FCr\ ein\ Produkt.\n\n\ @param\ produkt\ Das\ zu\ bearbeitende\ Produkt.\n
+comment3.params=
+comment3.target=void\ run()
+comment3.text=\n\ \u00DCberpr\u00FCft\ und\ verarbeitet\ kontinuierlich\ die\ Warteschlange\ der\ Produkte.\n
+comment4.params=
+comment4.target=Produkt\ entnehmeProduktAusWarteschlange()
+comment4.text=\n\ Entnimmt\ das\ n\u00E4chste\ Produkt\ aus\ der\ Warteschlange.\n\n\ @return\ Das\ n\u00E4chste\ zu\ verarbeitende\ Produkt\ oder\ null,\ wenn\ die\ Warteschlange\ leer\ ist.\n
+numComments=5

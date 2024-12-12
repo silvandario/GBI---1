@@ -1,88 +1,107 @@
 import java.util.LinkedList;
 
 /**
- * Beschreiben Sie hier die Klasse Roboter.
+ * Klasse Roboter - Simuliert die Bearbeitung von Produkten durch Roboter.
  * 
  * @author Silvan
- * @version 1
- * 
- * In Übungslektion bei Alex: Montage_roboter, etc. -> nur eine Variante ist notwendig, einfach zum zeigen, dass es funktioniert
+ * @version 1.1
  */
-
-public class Roboter
-{
-    // Instanzvariablen - ersetzen Sie das folgende Beispiel mit Ihren Variablen
-    //Name
+public class Roboter extends Thread {
+    // Name des Roboters
     private String name;
-    //Warteschlange
-    private LinkedList<Produkt> warteschlange = new LinkedList<Produkt>();
-    //Zeit
-    int produktionsZeit;
+
+    // Warteschlange für zu bearbeitende Produkte
+    public LinkedList<Produkt> warteschlange = new LinkedList<>();
+
+    // Produktionszeit in Millisekunden
+    private int produktionsZeit = 2000;
 
     /**
      * Konstruktor
      * 
-     * @param name des Roboters
+     * @param name Name des Roboters
      */
-    public Roboter(String name){
+    public Roboter(String name) {
         this.name = name;
+        synchronisiertesPrintln("Roboter " + name + " gestartet.");
     }
-    
+
     /**
-     * Beschreibung
+     * Hauptmethode des Threads: Bearbeitet Produkte in der Warteschlange.
      */
-    public void run(){
-        while(true){ // unendliche Schleife , um immer wieder zu schauen, ob neue Produkte, welche produziert werden müssen, eingetroffen sind
-            if(warteschlange.peek() != null) { //Condition, um keine Leere zu bekommen
-                Produkt produkt = warteschlange.poll(); // nächstes Element wird weggenommen (ist verfügbar aber geht weg, praktisch für uns)
-                // synchronisiertesPrintln("Roboter " + this.name +": nimmt " + produkt + " aus der Warteschlange"); noch nciht IMplementiert             
+    @Override
+    public void run() {
+        while (true) { // Endlosschleife, um kontinuierlich auf neue Produkte zu prüfen
+            if (warteschlange.peek() != null) { // Warteschlange prüfen
+                Produkt produkt = warteschlange.poll(); // Produkt aus der Warteschlange holen
+                synchronisiertesPrintln("Roboter " + name + ": nimmt " + produkt + " aus der Warteschlange.");
                 produziereProdukt(produkt);
                 produkt.naechsteProduktionsStation();
             }
-            lasseThreadSchlafen(1000);
+            lasseThreadSchlafen(1000); // Kurze Pause zwischen den Iterationen
         }
-        
     }
 
     /**
-     * Lässt Thread schlafen, um die Bearbeitungszeit zu simulieren* 
-     * @param  zeit  Dauer, wie lange Thread schläft: Der Thread wird für 10 Minuten (600.000 Millisekunden) bei Standardtüren oder 
-     *  30 Minuten (1.800.000 Millisekunden) bei Premiumtüren schlafen gelegt
-     */
-    private void lasseThreadSchlafen(int zeit) {
-      try {
-         Thread.sleep((long)zeit);
-      } catch (InterruptedException lasseSchlafenE) {
-         lasseSchlafenE.printStackTrace();
-      }
-
-   }
-   
-   /**
-     * Die Produktion eines Produkts wird simuliert indem man den Thread schlafen legt
-     */
-    public void produziereProdukt(Produkt produkt){
-        //synchronisiertesPrintln("Roboter " + this.name +": produziert " + produkt);
-        lasseThreadSchlafen(produktionsZeit);
-        //synchronisiertesPrintln("Roboter " + this.name +": hat " + produkt + " fertig produziert");
-    }
-    
-   /**
-     * Gibt den Namen des Roboters
+     * Simuliert die Produktionszeit durch Thread-Schlaf.
      * 
-     * @return Name vom Roboter
+     * @param produkt Das Produkt, das bearbeitet wird
      */
-    
-    public String gibName(){
+    public void produziereProdukt(Produkt produkt) {
+        synchronisiertesPrintln("Roboter " + name + ": produziert " + produkt + ".");
+        lasseThreadSchlafen(produktionsZeit); // Thread schläft für die Produktionszeit
+        synchronisiertesPrintln("Roboter " + name + ": hat " + produkt + " fertig produziert.");
+    }
+
+    /**
+     * Fügt ein neues Produkt zur Warteschlange hinzu.
+     * 
+     * @param produkt Das Produkt, das hinzugefügt werden soll
+     */
+    public void fuegeProduktHinzu(Produkt produkt) {
+        synchronisiertesPrintln("Roboter " + name + ": Produkt " + produkt + " zur Warteschlange hinzugefügt.");
+        warteschlange.add(produkt);
+    }
+
+    /**
+     * Setzt die Produktionszeit.
+     * 
+     * @param zeit Neue Produktionszeit in Millisekunden
+     */
+    public void setzteProduktionsZeit(int zeit) {
+        this.produktionsZeit = zeit;
+    }
+
+    /**
+     * Gibt den Namen des Roboters zurück.
+     * 
+     * @return Name des Roboters
+     */
+    public String gibName() {
         return name;
     }
-    
-   /**
-     * Roboter erhält neues PRodukt 
+
+    /**
+     * Lässt den Thread für eine bestimmte Zeit schlafen.
      * 
+     * @param zeit Zeit in Millisekunden, die der Thread schlafen soll
      */
-    
-    public void fuegeProduktHinzu(Produkt produkt){
-        warteschlange.add(produkt); 
+    private void lasseThreadSchlafen(int zeit) {
+        try {
+            Thread.sleep(zeit);
+        } catch (InterruptedException e) {
+            synchronisiertesPrintln("Roboter " + name + ": Schlaf wurde unterbrochen!");
+        }
+    }
+
+    /**
+     * Synchronized Print-Methode zur Vermeidung von Konsolen-Kollisionen.
+     * 
+     * @param output Text, der ausgegeben werden soll
+     */
+    private void synchronisiertesPrintln(String output) {
+        synchronized (System.out) {
+            System.out.println(output);
+        }
     }
 }

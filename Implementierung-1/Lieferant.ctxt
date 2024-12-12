@@ -1,10 +1,8 @@
 #BlueJ class context
 comment0.target=Lieferant
-comment0.text=\n\ Die\ Klasse\ Lieferant\ simuliert\ die\ Funktion\ eines\ externen\ Lieferanten,\n\ der\ Materialien\ an\ die\ Fabrik\ liefert,\ um\ das\ Lager\ aufzuf\u00FCllen.\n\n\ Diese\ Klasse\ enth\u00E4lt\ eine\ Methode,\ die\ eine\ Bestellung\ von\ Materialien\ bearbeitet.\n\n\ @author\ Silvan\n\ @version\ 1.0\n
-comment1.params=
-comment1.target=Lieferant()
-comment1.text=\n\ Konstruktor\n
-comment2.params=holzEinheiten\ schrauben\ farbEinheiten\ kartonEinheiten\ glasEinheiten
-comment2.target=boolean\ wareBestellen(int,\ int,\ int,\ int,\ int)
-comment2.text=\n\ Simuliert\ die\ Bearbeitung\ einer\ Bestellung\ von\ Materialien\ des\ Kunden.\n\ \n\ @param\ holzEinheiten\ \ \ \ Anzahl\ der\ bestellten\ Holzeinheiten\n\ @param\ schrauben\ \ \ \ \ \ \ \ Anzahl\ der\ bestellten\ Schrauben\n\ @param\ farbEinheiten\ \ \ \ Anzahl\ der\ bestellten\ Farbeinheiten\n\ @param\ kartonEinheiten\ \ Anzahl\ der\ bestellten\ Kartoneinheiten\n\ @param\ glasEinheiten\ \ \ \ Anzahl\ der\ bestellten\ Glaseinheiten\n\ @return\ true,\ wenn\ die\ Bestellung\ erfolgreich\ war,\ andernfalls\ false\n
+comment0.text=\n\ Diese\ Klasse\ simuliert\ die\ Lieferzeit\ des\ Lieferanten\n\ und\ steuert\ die\ Lieferung\ von\ Materialien\ ins\ Lager.\n\ \n\ @author\ Silvan\n\ @version\ 1.1\n
+comment1.params=lager
+comment1.target=Lieferant(Lager)
+comment2.params=
+comment2.target=void\ run()
 numComments=3

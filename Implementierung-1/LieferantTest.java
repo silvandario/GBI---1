@@ -3,92 +3,68 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Testklasse für die Klasse Lieferant.
- * Überprüft die Funktionalität der Methode `wareBestellen`.
+ * Überprüft die Funktionalität der Materiallieferung ins Lager.
  * 
  * @author Silvan
- * @version 1.1
+ * @version 1.3
  */
 public class LieferantTest {
 
-    private Lieferant lieferant = new Lieferant();
-
     @Test
-    public void testWareBestellenErfolgreich() {
+    public void testLieferungErfolgreich() throws InterruptedException {
         // Arrange
-        int holzEinheiten = 500;
-        int schrauben = 2000;
-        int farbEinheiten = 100;
-        int kartonEinheiten = 50;
-        int glasEinheiten = 20;
+        Lager lager = new Lager();
+        Lieferant lieferant = new Lieferant(lager);
 
         // Act
-        boolean result = lieferant.wareBestellen(holzEinheiten, schrauben, farbEinheiten, kartonEinheiten, glasEinheiten);
+        Thread lieferantThread = new Thread(lieferant);
+        lieferantThread.start();
+        lieferantThread.join(); // Wartet, bis der Thread fertig ist
 
         // Assert
-        assertTrue(result, "Die Bestellung sollte erfolgreich sein.");
+        assertEquals(1000, lager.getVorhandeneHolzeinheiten(), "Das Lager sollte vollständig aufgefüllt sein.");
+        assertEquals(5000, lager.getVorhandeneSchrauben(), "Das Lager sollte vollständig aufgefüllt sein.");
+        assertEquals(500, lager.getVorhandeneFarbeinheiten(), "Das Lager sollte vollständig aufgefüllt sein.");
+        assertEquals(300, lager.getVorhandeneKartoneinheiten(), "Das Lager sollte vollständig aufgefüllt sein.");
+        assertEquals(200, lager.getVorhandeneGlaseinheiten(), "Das Lager sollte vollständig aufgefüllt sein.");
     }
 
     @Test
-    public void testWareBestellenGesamtmengeNull() {
-        // Arrange
-        int holzEinheiten = 0;
-        int schrauben = 0;
-        int farbEinheiten = 0;
-        int kartonEinheiten = 0;
-        int glasEinheiten = 0;
+    public void testUnterbrechungDerLieferung() throws InterruptedException {
+    // Arrange
+    Lager lager = new Lager();
+    lager.setVorhandeneHolzeinheiten(500); // Initialbestand
+    Lieferant lieferant = new Lieferant(lager);
+    Thread lieferantThread = new Thread(lieferant);
 
-        // Act
-        boolean result = lieferant.wareBestellen(holzEinheiten, schrauben, farbEinheiten, kartonEinheiten, glasEinheiten);
+    // Act
+    lieferantThread.start();
+    Thread.sleep(300); // Warte, bis die Lieferung begonnen hat
+    lieferantThread.interrupt(); // Unterbreche den Lieferant-Thread
+    lieferantThread.join(); // Warte, bis der Thread beendet ist
 
-        // Assert
-        assertFalse(result, "Die Bestellung sollte fehlschlagen, da die Gesamtmenge 0 ist.");
-    }
-
-    @Test
-    public void testWareBestellenUeberMaxWert() {
-        // Arrange
-        int holzEinheiten = 1500; // Überschreitet maxHolzeinheiten
-        int schrauben = 2000;
-        int farbEinheiten = 100;
-        int kartonEinheiten = 50;
-        int glasEinheiten = 20;
-
-        // Act
-        boolean result = lieferant.wareBestellen(holzEinheiten, schrauben, farbEinheiten, kartonEinheiten, glasEinheiten);
-
-        // Assert
-        assertFalse(result, "Die Bestellung sollte fehlschlagen, da die maximale Holzeinheiten überschritten wurden.");
-    }
+    // Assert
+    assertNotEquals(1000, lager.getVorhandeneHolzeinheiten(), "Das Lager sollte nicht vollständig aufgefüllt sein.");
+    }   
 
     @Test
-    public void testWareBestellenNegativeWerte() {
+    public void testKeineMaterialänderungBeiUnterbrechung() throws InterruptedException {
         // Arrange
-        int holzEinheiten = -10;
-        int schrauben = -50;
-        int farbEinheiten = -5;
-        int kartonEinheiten = -2;
-        int glasEinheiten = -1;
+        Lager lager = new Lager();
+        Lieferant lieferant = new Lieferant(lager);
 
         // Act
-        boolean result = lieferant.wareBestellen(holzEinheiten, schrauben, farbEinheiten, kartonEinheiten, glasEinheiten);
+        Thread lieferantThread = new Thread(lieferant);
+        lieferantThread.start();
+        lieferantThread.interrupt(); // Unterbricht den Lieferant-Thread
+        lieferantThread.join(); // Wartet, bis der Thread beendet ist
 
         // Assert
-        assertFalse(result, "Die Bestellung sollte fehlschlagen, da negative Werte angegeben wurden.");
-    }
-
-    @Test
-    public void testWareBestellenGenauAmLimit() {
-        // Arrange
-        int holzEinheiten = 1000;
-        int schrauben = 5000;
-        int farbEinheiten = 500;
-        int kartonEinheiten = 300;
-        int glasEinheiten = 200;
-
-        // Act
-        boolean result = lieferant.wareBestellen(holzEinheiten, schrauben, farbEinheiten, kartonEinheiten, glasEinheiten);
-
-        // Assert
-        assertTrue(result, "Die Bestellung sollte erfolgreich sein, da sie genau an der Obergrenze liegt.");
+        // Die Materialien sollten unverändert bleiben
+        assertEquals(1000, lager.getVorhandeneHolzeinheiten(), "Die Holzeinheiten sollten unverändert bleiben.");
+        assertEquals(5000, lager.getVorhandeneSchrauben(), "Die Schrauben sollten unverändert bleiben.");
+        assertEquals(500, lager.getVorhandeneFarbeinheiten(), "Die Farbeinheiten sollten unverändert bleiben.");
+        assertEquals(300, lager.getVorhandeneKartoneinheiten(), "Die Kartoneinheiten sollten unverändert bleiben.");
+        assertEquals(200, lager.getVorhandeneGlaseinheiten(), "Die Glaseinheiten sollten unverändert bleiben.");
     }
 }
