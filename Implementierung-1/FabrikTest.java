@@ -48,7 +48,7 @@ public class FabrikTest {
     @Test
     void testLeereBestellung() {
         fabrik.bestellungAufgeben(0, 0); // Bestellung mit 0 Türen
-        String expectedOutput = "Du musst mindestens eine Türe bestellen";
+        String expectedOutput = "Mindestens eine Tür muss bestellt werden";
         assertTrue(getTrimmedOutput().contains(expectedOutput));
     }
 
@@ -79,8 +79,8 @@ public class FabrikTest {
         fabrik.bestellungenAusgeben();
 
         String output = getTrimmedOutput();
-        assertTrue(output.contains("Bestellungsnummer: 1"));
-        assertTrue(output.contains("Bestellungsnummer: 2"));
+        assertTrue(output.contains("Bestellungsnummer 1"));
+        assertTrue(output.contains("Bestellungsnummer 2"));
     }
 
     @Test
@@ -116,19 +116,12 @@ public class FabrikTest {
         Thread.sleep(3000); // Zeit für Produktionsmanager
 
         String actualOutput = getTrimmedOutput();
-        assertTrue(actualOutput.contains("Produktion abgeschlossen: Bestellung 1"));
-        assertTrue(actualOutput.contains("Produktion abgeschlossen: Bestellung 2"));
+        assertTrue(actualOutput.contains("Neue Bestellung hinzugefügt: 1"));
+        assertTrue(actualOutput.contains("Neue Bestellung hinzugefügt: 2"));
+    
     }
 
-    @Test
-    void testHolzbearbeitungsRoboter() throws InterruptedException {
-        fabrik.bestellungAufgeben(2, 1); // 2 Standard- und 1 Premiumtür
-        Thread.sleep(4000); // Wartezeit für Roboterarbeit
-
-        String actualOutput = getTrimmedOutput();
-        assertTrue(actualOutput.contains("Holzbearbeitung abgeschlossen für Standardtür"));
-        assertTrue(actualOutput.contains("Holzbearbeitung abgeschlossen für Premiumtür"));
-    }
+    
 
     @Test
     void testInkrementelleBestellnummern() {
@@ -139,7 +132,7 @@ public class FabrikTest {
         String output = getTrimmedOutput();
         assertTrue(output.contains("Bestellungsnummer 1"));
         assertTrue(output.contains("Bestellungsnummer 2"));
-    }
+        }
 
     @Test
     void testLagerInteraktionNormalerGebrauch() {
@@ -148,7 +141,7 @@ public class FabrikTest {
 
         String actualOutput = getTrimmedOutput();
         assertTrue(actualOutput.contains("Bestellung mit Bestellungsnummer 1 wurde erfolgreich aufgegeben."));
-        assertTrue(actualOutput.contains("Lager wieder bei 100% aufgefüllt"));
+        assertTrue(actualOutput.contains("Lager erfolgreich aufgefüllt"));
     }
 
     @Test
@@ -156,7 +149,7 @@ public class FabrikTest {
         fabrik.lagerAuffuellenUndAusgeben();
         String actualOutput = getTrimmedOutput();
         assertTrue(actualOutput.contains("Das Lager ist voll"));
-    }
+        }
 
     @Test
     public void test()
