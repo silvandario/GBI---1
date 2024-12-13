@@ -5,7 +5,7 @@ import java.util.*;
  * Sie ist als Thread implementiert, um kontinuierlich eingehende Bestellungen
  * zu bearbeiten und die Produkte den entsprechenden Robotern zuzuweisen.
  *
- * @version 10.12.2024
+ * @version 13.12.2024
  */
 public class Produktions_Manager extends Thread {
     private Holzbearbeitungs_Roboter holzRoboter;
@@ -28,6 +28,9 @@ public class Produktions_Manager extends Thread {
         this.lackierRoboter = starteRoboter(new Lackier_Roboter("Lackierroboter"));
         this.verpackungsRoboter = starteRoboter(new Verpackungs_Roboter("Verpackungsroboter"));
     }
+    public LinkedList<Bestellung> getBestellungenInProduktion() {
+        return bestellungenInProduktion;
+    }
 
     @Override
     public void run() {
@@ -41,6 +44,7 @@ public class Produktions_Manager extends Thread {
                 synchronisiertesPrintln("Fehler im Produktionsmanager: " + e.getMessage());
             }
         }
+        synchronisiertesPrintln("Produktionsmanager beendet.");
     }
 
     public void beenden() {
@@ -55,21 +59,21 @@ public class Produktions_Manager extends Thread {
         verpackungsRoboter.beenden();
     }
 
-    private void bearbeiteBestellungen() {
-    synchronized (zuVerarbeitendeBestellungen) {
-        if (!zuVerarbeitendeBestellungen.isEmpty()) {
-            Bestellung naechsteBestellung = zuVerarbeitendeBestellungen.poll();
-            if (meinLager.liefereMaterial(naechsteBestellung)) {
-                bestellungenInProduktion.add(naechsteBestellung);
-                starteProduktion(naechsteBestellung);
-            } else {
-                synchronisiertesPrintln("Material nicht verfügbar für Bestellung: " + naechsteBestellung.gibBestellungsNr());
+    public void bearbeiteBestellungen() {
+        synchronized (zuVerarbeitendeBestellungen) {
+            if (!zuVerarbeitendeBestellungen.isEmpty()) {
+                Bestellung naechsteBestellung = zuVerarbeitendeBestellungen.poll();
+                if (meinLager.liefereMaterial(naechsteBestellung)) {
+                    bestellungenInProduktion.add(naechsteBestellung);
+                    starteProduktion(naechsteBestellung);
+                } else {
+                    synchronisiertesPrintln("Material nicht verfügbar für Bestellung: " + naechsteBestellung.gibBestellungsNr());
+                }
             }
         }
     }
-}
 
-    private void überprüfeProduktion() {
+    public void überprüfeProduktion() {
         synchronized (bestellungenInProduktion) {
             List<Bestellung> kopie = new ArrayList<>(bestellungenInProduktion);
             for (Bestellung bestellung : kopie) {
@@ -84,7 +88,7 @@ public class Produktions_Manager extends Thread {
 
     private boolean istProduktionAbgeschlossen(Bestellung bestellung) {
         for (Produkt produkt : bestellung.gibBestellteProdukte()) {
-            if (produkt.aktuellerZustand() != 3) {
+            if (produkt.aktuellerZustand() != 3) { // Zustand 3 = vollständig produziert
                 return false;
             }
         }
@@ -92,16 +96,16 @@ public class Produktions_Manager extends Thread {
     }
 
     private void starteProduktion(Bestellung bestellung) {
-    if (bestellung == null || bestellung.gibBestellteProdukte().isEmpty()) {
-        synchronisiertesPrintln("Keine Produkte für Bestellung: " + (bestellung != null ? bestellung.gibBestellungsNr() : "Unbekannt"));
-        return;
+        if (bestellung == null || bestellung.gibBestellteProdukte().isEmpty()) {
+            synchronisiertesPrintln("Keine Produkte für Bestellung: " + (bestellung != null ? bestellung.gibBestellungsNr() : "Unbekannt"));
+            return;
+        }
+        synchronisiertesPrintln("Produktion gestartet: Bestellung " + bestellung.gibBestellungsNr());
+        for (Produkt produkt : bestellung.gibBestellteProdukte()) {
+            alloziereRoboter(produkt);
+            produkt.naechsteProduktionsStation();
+        }
     }
-    synchronisiertesPrintln("Produktion gestartet: Bestellung " + bestellung.gibBestellungsNr());
-    for (Produkt produkt : bestellung.gibBestellteProdukte()) {
-        alloziereRoboter(produkt);
-        produkt.naechsteProduktionsStation();
-    }
-}
 
     public void fuegeZuVerarbeitendeBestellungenHinzu(Bestellung bestellung) {
         synchronized (zuVerarbeitendeBestellungen) {
