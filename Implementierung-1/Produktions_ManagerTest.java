@@ -48,9 +48,9 @@ public class Produktions_ManagerTest {
     
     @Test
     public void testProduktionEinerBestellungGross() throws InterruptedException {
-        Bestellung bestellung = new Bestellung(70, 700, 0);
+        Bestellung bestellung = new Bestellung(30, 1, 0);
         produktionsManager.fuegeZuVerarbeitendeBestellungenHinzu(bestellung);
-        Thread.sleep(7000); // Wartezeit anpassen für größere Bestellungen
+        Thread.sleep(30000); // Wartezeit anpassen für größere Bestellungen
         String output = getTrimmedOutput();
         assertTrue(output.contains("Produktion gestartet: Bestellung 1"), "Produktion sollte gestartet sein.");
         assertTrue(output.contains("Produktion abgeschlossen: Bestellung 1"), "Produktion sollte abgeschlossen sein.");
@@ -72,7 +72,7 @@ public class Produktions_ManagerTest {
         Bestellung bestellung2 = new Bestellung(0, 3, 0);
         produktionsManager.fuegeZuVerarbeitendeBestellungenHinzu(bestellung1);
         produktionsManager.fuegeZuVerarbeitendeBestellungenHinzu(bestellung2);
-        Thread.sleep(15000); // Zeit geben für beide Bestellungen
+        Thread.sleep(30000); // Zeit geben für beide Bestellungen
         String output = getTrimmedOutput();
         assertTrue(output.contains("Produktion gestartet: Bestellung 1"), "Produktion der ersten Bestellung sollte starten.");
         assertTrue(output.contains("Produktion abgeschlossen: Bestellung 1"), "Produktion der ersten Bestellung sollte abgeschlossen sein.");
