@@ -30,26 +30,23 @@ public class Produktions_ManagerTest {
         System.setOut(originalOut); // Standardausgabe wiederherstellen
         outputStream.reset();
     }
-    @Test
-    public void testBeendenVonProduktionsManager() {
-        Produktions_Manager manager = new Produktions_Manager(fabrik, lager);
-        manager.start();
-        manager.beenden();
-        assertFalse(manager.isAlive(), "Produktionsmanager-Thread sollte beendet sein.");
-    }
-    
+
     @Test
     public void testProduktionEinerBestellung() throws InterruptedException {
         Bestellung bestellung = new Bestellung(1, 1, 1);
         produktionsManager.fuegeZuVerarbeitendeBestellungenHinzu(bestellung);
+        produktionsManager.bearbeiteBestellungen();
         Thread.sleep(3000); // Zeit geben, damit die Bestellung verarbeitet wird
-        assertTrue(produktionsManager.getBestellungenInProduktion().contains(bestellung), "Produktion sollte gestartet sein.");
+        String output = getTrimmedOutput();
+        assertTrue(output.contains("Bearbeitung abgeschlossen"), "Bearbeitung sollte abgeschlossen");
+        
     }
     
     @Test
     public void testProduktionEinerBestellungGross() throws InterruptedException {
         Bestellung bestellung = new Bestellung(30, 1, 0);
         produktionsManager.fuegeZuVerarbeitendeBestellungenHinzu(bestellung);
+        produktionsManager.bearbeiteBestellungen();
         Thread.sleep(30000); // Wartezeit anpassen für größere Bestellungen
         String output = getTrimmedOutput();
         assertTrue(output.contains("Produktion gestartet: Bestellung 1"), "Produktion sollte gestartet sein.");

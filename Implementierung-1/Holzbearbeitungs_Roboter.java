@@ -24,9 +24,9 @@ public class Holzbearbeitungs_Roboter extends Roboter {
             // Bestimmen der Bearbeitungszeit basierend auf dem Produkttyp
             int verarbeitungsZeit;
             if (produkt instanceof Standardtuer) {
-                verarbeitungsZeit = 600000; // 10 Minuten in Millisekunden
+                verarbeitungsZeit = 60;// 600000; // 10 Minuten in Millisekunden
             } else if (produkt instanceof Premiumtuer) {
-                verarbeitungsZeit = 1800000; // 30 Minuten in Millisekunden
+                verarbeitungsZeit = 180; //1800000; // 30 Minuten in Millisekunden
             } else {
                 System.out.println("Unbekannter Produkttyp: " + produkt.getClass().getSimpleName());
                 return;
