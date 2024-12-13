@@ -69,6 +69,7 @@ public class Produktions_Manager extends Thread {
                 } else {
                     synchronisiertesPrintln("Material nicht verfügbar für Bestellung: " + naechsteBestellung.gibBestellungsNr());
                 }
+                
             }
         }
     }

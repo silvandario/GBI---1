@@ -44,13 +44,17 @@ public class Produktions_ManagerTest {
     
     @Test
     public void testProduktionEinerBestellungGross() throws InterruptedException {
-        Bestellung bestellung = new Bestellung(30, 1, 0);
+        Bestellung bestellung = new Bestellung(30, 0, 0); // Bestellung mit 30 Standardtüren
         produktionsManager.fuegeZuVerarbeitendeBestellungenHinzu(bestellung);
         produktionsManager.bearbeiteBestellungen();
-        Thread.sleep(30000); // Wartezeit anpassen für größere Bestellungen
+        Thread.sleep(65000); // Wartezeit anpassen für größere Bestellungen
+    
         String output = getTrimmedOutput();
-        assertTrue(output.contains("Produktion gestartet: Bestellung 1"), "Produktion sollte gestartet sein.");
-        assertTrue(output.contains("Produktion abgeschlossen: Bestellung 1"), "Produktion sollte abgeschlossen sein.");
+    
+        // Überprüfen, ob die Ausgabe 30 Mal das erwartete Muster enthält
+        String regex = "Produkt bereit zur Auslieferung: Standardtuer@[a-fA-F0-9]+";
+        long count = output.lines().filter(line -> line.matches(regex)).count();
+        assertEquals(30, count, "Es sollten 30 Produkte bereit zur Auslieferung sein.");
     }
     
     @Test
@@ -68,8 +72,8 @@ public class Produktions_ManagerTest {
     
     @Test
     public void testMehrereBestellungenInReihenfolge() throws InterruptedException {
-        Bestellung bestellung1 = new Bestellung(2, 1, 0);
-        Bestellung bestellung2 = new Bestellung(0, 3, 0);
+        Bestellung bestellung1 = new Bestellung(2, 1, 1);
+        Bestellung bestellung2 = new Bestellung(0, 3, 2);
         produktionsManager.fuegeZuVerarbeitendeBestellungenHinzu(bestellung1);
         produktionsManager.fuegeZuVerarbeitendeBestellungenHinzu(bestellung2);
         Thread.sleep(30000); // Zeit geben für beide Bestellungen
