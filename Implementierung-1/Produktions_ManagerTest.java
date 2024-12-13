@@ -58,12 +58,15 @@ public class Produktions_ManagerTest {
     
     @Test
     public void testMaterialMangelBestellungAbgelehnt() throws InterruptedException {
-        lager.setVorhandeneHolzeinheiten(0); // Lagerbestand simulieren
-        Bestellung bestellung = new Bestellung(1, 2, 0);
+        lager.setVorhandeneHolzeinheiten(0);
+        lager.setVorhandeneGlaseinheiten(0);
+        lager.setVorhandeneFarbeinheiten(0);// Lagerbestand simulieren
+        Bestellung bestellung = new Bestellung(1, 1, 1);
         produktionsManager.fuegeZuVerarbeitendeBestellungenHinzu(bestellung);
+        produktionsManager.bearbeiteBestellungen();
         Thread.sleep(3000); // Wartezeit für Verarbeitung
         String output = getTrimmedOutput();
-        assertTrue(output.contains("Material nicht verfügbar für Bestellung: 1"), "Es sollte eine Meldung über Materialmangel geben.");
+        assertTrue(output.contains("Materialmangel! Bestellung 1 kann nicht bearbeitet werden."), "Es sollte eine Meldung über Materialmangel geben.");
     }
     
     @Test
@@ -78,7 +81,7 @@ public class Produktions_ManagerTest {
         assertTrue(output.contains("Produktion abgeschlossen: Bestellung 1"), "Produktion der ersten Bestellung sollte abgeschlossen sein.");
         assertTrue(output.contains("Produktion gestartet: Bestellung 2"), "Produktion der zweiten Bestellung sollte starten.");
         assertTrue(output.contains("Produktion abgeschlossen: Bestellung 2"), "Produktion der zweiten Bestellung sollte abgeschlossen sein.");
-    }
+        }
 
     /**
      * Hilfsmethode: Trimmt die Konsolenausgabe und gibt sie als String zurück.
