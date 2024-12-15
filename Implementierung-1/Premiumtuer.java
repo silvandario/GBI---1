@@ -12,7 +12,7 @@ public class Premiumtuer extends Produkt {
     private static final int GLASSEINHEITEN = 5;
     private static final int FARBEINHEITEN = 1;
     private static final int KARTONEINHEITEN = 5;
-    private static final int PRODUKTIONSZEIT = 30;
+    private static final int PRODUKTIONSZEIT = 30; // Zur verkürzung der Tests wird anstelle 3o Min 1.800.000 Millisekunden bzw 1/60 davon 30 zur Bechleunigung der Tests verwendet
     
     
     /**

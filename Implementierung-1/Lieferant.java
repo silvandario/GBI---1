@@ -24,7 +24,7 @@ public void run() {
                 }
             }
             System.out.println("Lieferant: Lieferung gestartet...");
-            Thread.sleep(2000); // Simulate delivery time
+            Thread.sleep(2400); // Gemäss Aufgabe 24'000 ms; aber hier wird bewusst ein Zehntel verwendet um die Tests zu beschleunigen
             synchronized (lager) {
                 lager.lagerAuffuellen();
                 lager.notifyAll(); // Notify waiting threads

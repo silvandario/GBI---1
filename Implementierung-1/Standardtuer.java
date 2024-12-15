@@ -12,7 +12,7 @@ public class Standardtuer extends Produkt {
     private static final int SCHRAUBEN = 10;
     private static final int FARBEINHEITEN = 2;
     private static final int KARTONEINHEITEN = 1;
-    private static final int PRODUKTIONSZEIT = 10;
+    private static final int PRODUKTIONSZEIT = 10; // Zur verkürzung der Tests wird anstelle 1o Min 600.000 Millisekunden bzw 1/60 davon 10 zur Bechleunigung der Tests verwendet
     
     /**
      * Konstruktor ruft Superklasse-Konstruktor auf
