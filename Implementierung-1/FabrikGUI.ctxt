@@ -1,0 +1,20 @@
+#BlueJ class context
+comment0.target=FabrikGUI
+comment1.params=manager
+comment1.target=FabrikGUI(Produktions_Manager)
+comment2.params=
+comment2.target=void\ updateLager()
+comment2.text=\n\ Aktualisiert\ den\ Lagerbestand\ in\ der\ GUI.\n
+comment3.params=text
+comment3.target=void\ updateConsole(java.lang.String)
+comment3.text=\n\ Aktualisiert\ die\ Konsolenausgabe\ in\ der\ GUI.\n\n\ @param\ text\ Der\ anzuzeigende\ Text.\n
+comment4.params=
+comment4.target=void\ redirectSystemStreams()
+comment4.text=\n\ Leitet\ die\ Systemausgabe\ (stdout\ und\ stderr)\ zur\ GUI\ um.\n
+comment5.params=b
+comment5.target=void\ write(int)
+comment6.params=b\ off\ len
+comment6.target=void\ write(byte[],\ int,\ int)
+comment7.params=args
+comment7.target=void\ main(java.lang.String[])
+numComments=8

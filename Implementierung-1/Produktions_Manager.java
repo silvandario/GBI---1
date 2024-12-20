@@ -8,12 +8,12 @@ import java.util.*;
  * @version 13.12.2024
  */
 public class Produktions_Manager extends Thread {
+    private Lager meinLager;
     private Holzbearbeitungs_Roboter holzRoboter;
     private Montage_Roboter montageRoboter;
     private Verpackungs_Roboter verpackungsRoboter;
     private Lackier_Roboter lackierRoboter;
     private Fabrik meineFabrik;
-    private Lager meinLager;
     private LinkedList<Bestellung> zuVerarbeitendeBestellungen = new LinkedList<>();
     private LinkedList<Bestellung> bestellungenInProduktion = new LinkedList<>();
     private volatile boolean isRunning = true; // Kontrollvariable für den Thread
@@ -149,5 +149,8 @@ public class Produktions_Manager extends Thread {
         synchronized (System.out) {
             System.out.println(output);
         }
+    }
+    public Lager getMeinLager() {
+        return meinLager;
     }
 }
